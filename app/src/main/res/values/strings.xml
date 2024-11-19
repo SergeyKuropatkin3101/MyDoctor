@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">My doctor</string>
+    <string name="MyDoctorString">Мой доктор</string>
+    <string name="Pressure">Давление</string>
+</resources>
