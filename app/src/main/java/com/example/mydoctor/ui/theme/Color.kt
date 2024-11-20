@@ -2,7 +2,10 @@ package com.example.mydoctor.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-
+val GreyDark = Color(0xff83A0B9)
+val Black500 = Color(0x1C1C2480)
+val Black = Color(0xff000000)
+val Black1000 = Color(0xFF1C1C24)
 val Black300 = Color(0x1C1C244D)
 val White = Color(0xFFFFFFFF)
 val Purple80 = Color(0xFFD0BCFF)
