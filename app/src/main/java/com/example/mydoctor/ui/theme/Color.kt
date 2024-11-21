@@ -2,6 +2,9 @@ package com.example.mydoctor.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
+
+val ColorEllipseBig = Color(0x4DFFC122)
+val ColorEllipseSmall = Color(0x7FFF0000)
 val GreyDark = Color(0xff83A0B9)
 val Black500 = Color(0x1C1C2480)
 val Black = Color(0xff000000)
