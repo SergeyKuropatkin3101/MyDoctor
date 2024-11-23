@@ -1,25 +1,28 @@
-package com.example.mydoctor.components
+package com.example.mydoctor.component.homeScreen
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.Font
@@ -42,16 +45,15 @@ import java.util.Locale
 fun Header(modifier: Modifier = Modifier){
     Column(
         modifier = Modifier
-            .padding(16.dp)
     ) {
         Row(
-            modifier = Modifier,
-            verticalAlignment = Alignment.CenterVertically
+            modifier = Modifier
+                .align(Alignment.CenterHorizontally)
+                .padding(16.dp)
         ){
             Image(
                 imageVector = ImageVector.vectorResource(id = R.drawable.logo),
-                contentDescription = "Logo",
-                modifier = Modifier
+                contentDescription = "Logo"
             )
             Spacer(modifier = modifier.width(6.dp))
             val exo2font = FontFamily(
@@ -61,28 +63,35 @@ fun Header(modifier: Modifier = Modifier){
                 text = stringResource(R.string.MyDoctorString),
                 fontFamily = exo2font,
                 fontSize = 16.sp,
-                color = Black1000
+                color = Black1000,
+                modifier = Modifier
+                    .align(Alignment.CenterVertically)
             )
         }
-        Spacer(modifier = Modifier.height(16.dp))
-        Row{
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.End
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
+        ){
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
             ) {
-                Column {
+                Column(
+                    modifier = Modifier
+                        .align(Alignment.Center)
+                ) {
                     Text(
                         text = stringResource(R.string.Pressure),
                         fontSize = 18.sp,
                         textAlign = TextAlign.Center,
                         color = Black1000
                     )
-                    Spacer(modifier = Modifier.height(8.dp))
+                    Spacer(modifier = Modifier.height(4.dp))
                     val dataFormat = SimpleDateFormat(
                         "MMMM yyyy 'г.'"
                     )
 
-                    // Создание переменной для текущей даты
                     val currentDate = dataFormat.format(Date())
 
                     Text(
@@ -96,27 +105,25 @@ fun Header(modifier: Modifier = Modifier){
                         color = Black1000
                     )
                 }
-                Spacer(modifier = Modifier.width(10.dp))
-                Box(
+
+                IconButton(
+                    onClick = {},
                     modifier = Modifier
-                        .padding(4.dp)
-                        .shadow(4.dp)
-                        .clip(
-                            RoundedCornerShape(
-                                 10.dp
-                            )
-                        )
-                ){
-
-                        Image(
-                            imageVector = ImageVector.vectorResource(R.drawable.plus),
-                            contentDescription = "иконка настройки",
-                            modifier = Modifier
-                                .background(White)
-                                .padding(4.dp)
-                        )
-
+                        .align(Alignment.CenterEnd)
+                        .clip(RoundedCornerShape(9.dp))
+                        .size(32.dp)
+                        .background(White)
+                ) {
+                    Icon(
+                        painterResource(R.drawable.plus),
+                        contentDescription = "Добавление данных",
+                        tint = Black1000,
+                        modifier = Modifier
+                            .padding(4.dp)
+                            .fillMaxSize()
+                    )
                 }
+
 
             }
         }

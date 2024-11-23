@@ -2,4 +2,17 @@
     <string name="app_name">My doctor</string>
     <string name="MyDoctorString">Мой доктор</string>
     <string name="Pressure">Давление</string>
+    <string name="descriptionCondition">Опишите свое состояние</string>
+    <string name="addNotes">Добавление заметки</string>
+    <string name="textNotes">Заметки</string>
+    <string name="textDescriptionIconNote">icon notes</string>
+    <string name="buttonBack">Кнопка назад</string>
+    <string name="addData">Добавить данные</string>
+    <string name="textBloodPressure">Кровянное давление</string>
+    <string name="textPulse">Пульс</string>
+    <string name="lowerPressure">Диастолическое</string>
+    <string name="upperPressure">Систолическое</string>
+    <string name="textDataMeasurement">Дата измерений</string>
+    <string name="textTimeMeasurement">Время изменений</string>
+    <string name="textNote">Заметка</string>
 </resources>

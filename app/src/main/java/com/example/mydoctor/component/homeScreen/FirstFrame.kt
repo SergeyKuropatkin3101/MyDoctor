@@ -1,12 +1,9 @@
-package com.example.mydoctor.components
+package com.example.mydoctor.component.homeScreen
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 
 
 @Composable
@@ -16,7 +13,6 @@ fun FirstFrame(modifier: Modifier = Modifier) {
     ) {
         TimeInterval()
         FrameWithGraph()
-        Spacer(modifier = Modifier.height(8.dp))
         Notes()
     }
 }

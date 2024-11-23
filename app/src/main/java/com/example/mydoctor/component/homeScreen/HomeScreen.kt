@@ -1,11 +1,10 @@
-package com.example.mydoctor.components
+package com.example.mydoctor.component.homeScreen
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
@@ -68,8 +67,6 @@ fun HomeScreen(modifier: Modifier = Modifier) {
 
         }
         Column(
-            modifier = Modifier,
-            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Header()
             FirstFrame()
