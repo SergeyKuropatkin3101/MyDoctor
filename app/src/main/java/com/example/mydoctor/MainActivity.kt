@@ -8,7 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
-import com.example.mydoctor.component.homeScreen.HomeScreen
+import com.example.mydoctor.component.secondScreen.SecondScreen
 import com.example.mydoctor.ui.theme.MyDoctorTheme
 
 class MainActivity : ComponentActivity() {
@@ -18,7 +18,8 @@ class MainActivity : ComponentActivity() {
         setContent {
             MyDoctorTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    HomeScreen(
+
+                    SecondScreen(
                         modifier = Modifier.padding(innerPadding)
                     )
                 }

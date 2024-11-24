@@ -1,6 +1,7 @@
 package com.example.mydoctor.component.homeScreen
 
 import android.annotation.SuppressLint
+import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -16,6 +17,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -33,7 +35,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.mydoctor.R
+import com.example.mydoctor.component.secondScreen.SecondScreen
 import com.example.mydoctor.ui.theme.Black1000
+import com.example.mydoctor.ui.theme.MyDoctorTheme
 import com.example.mydoctor.ui.theme.White
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -107,7 +111,7 @@ fun Header(modifier: Modifier = Modifier){
                 }
 
                 IconButton(
-                    onClick = {},
+                    onClick = { },
                     modifier = Modifier
                         .align(Alignment.CenterEnd)
                         .clip(RoundedCornerShape(9.dp))

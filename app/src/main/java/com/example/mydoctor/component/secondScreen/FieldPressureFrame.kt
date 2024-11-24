@@ -3,8 +3,11 @@ package com.example.mydoctor.component.secondScreen
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
@@ -30,80 +33,102 @@ fun FieldPressureFrame(modifier: Modifier = Modifier) {
                 16.dp,
                 24.dp
             ),
-        horizontalArrangement = Arrangement.SpaceBetween
+        horizontalArrangement = Arrangement.SpaceEvenly
     ) {
+
         Column(
             modifier = Modifier
+                .weight(2f)
+
         ) {
-            Text(text = stringResource(R.string.textBloodPressure))
+            Text(text = stringResource(R.string.textBloodPressure),
+                modifier = Modifier
+                    .padding(bottom = 8.dp))
             Row(
                 modifier = Modifier,
-                horizontalArrangement = Arrangement.SpaceBetween
+                horizontalArrangement = Arrangement.SpaceEvenly
             ){
                 Column(
                     modifier = Modifier
+                        .weight(1f)
+                        .padding(end = 8.dp)
                 ) {
                     Text(
                         text = stringResource(R.string.upperPressure),
-                        fontSize = 12.sp
+                        fontSize = 12.sp,
+                        modifier = Modifier
+                            .padding(bottom = 16.dp)
                     )
-                    val message = remember{mutableStateOf("Hello")}
+                    val message = remember{mutableStateOf("")}
                     OutlinedTextField(
                         message.value,
                         {message.value = it},
                         singleLine = true,
                         shape = RoundedCornerShape(14.dp),
-                        placeholder = { Text("Hello Work!") },
+                        placeholder = { Text("120") },
                         textStyle = TextStyle(fontSize =  18.sp),
                         colors = OutlinedTextFieldDefaults.colors(
                             focusedBorderColor= Color(0xff16a085), // цвет при получении фокуса
                             unfocusedBorderColor = Color(0xffcccccc)  // цвет при отсутствии фокуса
                         ),
                         modifier = Modifier
-                            .fillMaxWidth(.3f)
                     )
                 }
                 Column(
                 modifier = Modifier
+                    .weight(1f)
                 ) {
                     Text(
                         text = stringResource(R.string.lowerPressure),
-                        fontSize = 12.sp
+                        fontSize = 12.sp,
+                        modifier = Modifier
+                            .padding(bottom = 16.dp)
                     )
-                    val message = remember{mutableStateOf("Hello")}
+                    val message = remember{mutableStateOf("")}
                     OutlinedTextField(
                         message.value,
                         {message.value = it},
                         shape = RoundedCornerShape(14.dp),
                         singleLine = true,
-                        placeholder = { Text("Hello Work!") },
+                        placeholder = { Text("90") },
                         textStyle = TextStyle(fontSize =  18.sp),
                         colors = OutlinedTextFieldDefaults.colors(
                             focusedBorderColor= Color(0xff16a085),
                             unfocusedBorderColor = Color(0xffcccccc)
                         ),
                         modifier = Modifier
-                            .fillMaxWidth(.3f)
 
                     )
                 }
             }
         }
-        Column (
-        ){
-            Text(text = stringResource(R.string.textPulse))
-            val message = remember{mutableStateOf("Hello")}
+        Spacer(modifier = Modifier.width(24.dp))
+
+
+        Column(
+            modifier = Modifier
+                .weight(1f)
+        ) {
+            Text(
+                text = stringResource(R.string.textPulse),
+                modifier = Modifier
+                    .padding(bottom = 8.dp)
+            )
+
+            Spacer(modifier = Modifier.height(30.dp))
+            val message = remember{mutableStateOf("")}
             OutlinedTextField(
                 message.value,
                 {message.value = it},
                 singleLine = true,
                 shape = RoundedCornerShape(14.dp),
-                placeholder = { Text("Hello Work!") },
+                placeholder = { Text("70") },
                 textStyle = TextStyle(fontSize =  18.sp),
                 colors = OutlinedTextFieldDefaults.colors(
                     focusedBorderColor= Color(0xff16a085),
                     unfocusedBorderColor = Color(0xffcccccc)
                 ),
+                modifier = Modifier
             )
         }
     }

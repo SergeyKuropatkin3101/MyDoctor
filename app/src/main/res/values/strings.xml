@@ -13,6 +13,7 @@
     <string name="lowerPressure">Диастолическое</string>
     <string name="upperPressure">Систолическое</string>
     <string name="textDataMeasurement">Дата измерений</string>
-    <string name="textTimeMeasurement">Время изменений</string>
+    <string name="textTimeMeasurement">Время измерений</string>
     <string name="textNote">Заметка</string>
+    <string name="textIncorrectData">Дата не может быть установлена меньше нынешней</string>
 </resources>
