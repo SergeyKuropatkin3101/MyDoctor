@@ -5,23 +5,26 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 
 
 @Composable
-fun FrameWithContent(modifier: Modifier = Modifier) {
+fun FrameWithContent(navController: NavHostController) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
     ) {
-        HeaderSecondScreen()
+        HeaderSecondScreen(navController)
         FieldPressureFrame()
         FieldDateAndTimeFrame()
-        addDataNotes()
+        AddDataNotes()
     }
 }
 
 @Preview(showBackground = true)
 @Composable
 fun FrameWithContentPreview() {
-    FrameWithContent()
+    val navController = rememberNavController()
+    FrameWithContent(navController)
 }

@@ -21,7 +21,7 @@ import com.example.mydoctor.ui.theme.White
 
 
 @Composable
-fun addDataNotes(modifier: Modifier = Modifier) {
+fun AddDataNotes() {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -69,7 +69,7 @@ fun addDataNotes(modifier: Modifier = Modifier) {
 
 @Preview(showBackground = true)
 @Composable
-fun addDataNotesPreview() {
-    addDataNotes()
+fun AddDataNotesPreview() {
+    AddDataNotes()
 }
 

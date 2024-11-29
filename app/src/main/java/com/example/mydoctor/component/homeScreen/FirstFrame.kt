@@ -2,17 +2,16 @@ package com.example.mydoctor.component.homeScreen
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 
 
 @Composable
-fun FirstFrame(modifier: Modifier = Modifier) {
-    Column(
-        modifier = Modifier
-    ) {
+fun FirstFrame(navController: NavHostController) {
+    Column {
         TimeInterval()
-        FrameWithGraph()
+        FrameWithGraph(navController)
         Notes()
     }
 }
@@ -20,5 +19,6 @@ fun FirstFrame(modifier: Modifier = Modifier) {
 @Preview(showBackground = true)
 @Composable
 fun FirstFramePreview() {
-    FirstFrame()
+    val navController = rememberNavController()
+    FirstFrame(navController)
 }

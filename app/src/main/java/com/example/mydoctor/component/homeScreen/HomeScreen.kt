@@ -1,6 +1,7 @@
 package com.example.mydoctor.component.homeScreen
 
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,12 +14,18 @@ import androidx.compose.ui.graphics.TileMode
 import androidx.compose.ui.graphics.drawscope.translate
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.example.mydoctor.ui.theme.ColorEllipseBig
 import com.example.mydoctor.ui.theme.ColorEllipseSmall
+import com.example.mydoctor.ui.theme.White_bg
 
 @Composable
-fun HomeScreen(modifier: Modifier = Modifier) {
-    Box(modifier = modifier) {
+fun HomeScreen(navController: NavHostController, modifier: Modifier = Modifier) {
+    Box (
+        modifier = modifier
+            .background(White_bg)
+    ){
         Canvas(
             modifier = Modifier
                 .fillMaxSize()
@@ -66,10 +73,9 @@ fun HomeScreen(modifier: Modifier = Modifier) {
             }
 
         }
-        Column(
-        ) {
-            Header()
-            FirstFrame()
+        Column {
+            Header(navController)
+            FirstFrame(navController)
         }
     }
 }
@@ -77,5 +83,6 @@ fun HomeScreen(modifier: Modifier = Modifier) {
 @Preview(showBackground = true)
 @Composable
 fun HomeScreenPreview() {
-    HomeScreen()
+    val navController = rememberNavController()
+    HomeScreen(navController = navController, modifier = Modifier)
 }

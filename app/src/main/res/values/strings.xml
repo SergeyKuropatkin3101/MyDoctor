@@ -16,4 +16,11 @@
     <string name="textTimeMeasurement">Время измерений</string>
     <string name="textNote">Заметка</string>
     <string name="textIncorrectData">Дата не может быть установлена меньше нынешней</string>
+    <string name="textNoData">Нет данных</string>
+    <string name="TextToday">Сегодня</string>
+    <string name="textAddData">Добавление данных</string>
+    <string name="textDay">День</string>
+    <string name="textWeek">Неделя</string>
+    <string name="textMonth">Месяц</string>
+    <string name="textSave">Сохранить</string>
 </resources>

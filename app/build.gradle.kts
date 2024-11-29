@@ -57,7 +57,7 @@ dependencies {
 
     // Choose one of the following:
     // Material Design 3
-    implementation("androidx.compose.material3:material3")
+//    implementation("androidx.compose.material3:material3")
     // or Material Design 2
     implementation("androidx.compose.material:material")
     // or skip Material Design and build directly on top of foundational components
@@ -89,9 +89,7 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.5")
     // Optional - Integration with LiveData
     implementation("androidx.compose.runtime:runtime-livedata")
-    // Optional - Integration with RxJava
-    implementation("androidx.compose.runtime:runtime-rxjava2")
-
+    implementation ("androidx.compose.material3:material3-android:1.3.1")
 }
 
 dependencies {

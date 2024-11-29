@@ -1,12 +1,12 @@
 package com.example.mydoctor.component.secondScreen
 
-import androidx.compose.foundation.background
+import AdvancedTimePicker
+import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.BasicAlertDialog
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDefaults
 import androidx.compose.material3.DatePickerDialog
@@ -15,21 +15,15 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.TimePicker
-import androidx.compose.material3.TimePickerState
 import androidx.compose.material3.rememberDatePickerState
-import androidx.compose.material3.rememberTimePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -46,16 +40,15 @@ import java.util.Calendar
 import java.util.Date
 
 
+@SuppressLint("CoroutineCreationDuringComposition")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun FieldDateAndTimeFrame(modifier: Modifier = Modifier) {
+fun FieldDateAndTimeFrame() {
     val snackbarHostState = remember { mutableStateOf(SnackbarHostState()) }
     val scope = rememberCoroutineScope()
     var selectedDate by remember { mutableLongStateOf(System.currentTimeMillis()) }
-    var dateDialogController by  remember { mutableStateOf(false) }
+    var dialogControllerDate by  remember { mutableStateOf(false) }
     val dateState = rememberDatePickerState()
-
-    var dateDialogControllerTime by  remember { mutableStateOf(false) }
 
 
     Row(
@@ -75,18 +68,18 @@ fun FieldDateAndTimeFrame(modifier: Modifier = Modifier) {
             val currentDate = dataFormat.format(Date())
 
             TextButton(
-                onClick = { dateDialogController = true },
+                onClick = { dialogControllerDate = true },
                 modifier = Modifier
             ) {
-                if (dateDialogController) {
+                if (dialogControllerDate) {
                     DatePickerDialog(
-                        onDismissRequest = { dateDialogController = false },
+                        onDismissRequest = { dialogControllerDate = false },
                         confirmButton = {
                             TextButton(onClick = {
                                 if (dateState.selectedDateMillis != null) {
                                     selectedDate = dateState.selectedDateMillis!!
                                 }
-                                dateDialogController = false
+                                dialogControllerDate = false
                             }
                             ) {
                                 Text(
@@ -97,7 +90,7 @@ fun FieldDateAndTimeFrame(modifier: Modifier = Modifier) {
                         },
                         dismissButton = {
                             TextButton(onClick = {
-                                dateDialogController = false
+                                dialogControllerDate = false
                             }) {
                                 Text(
                                     text = "Cancel",
@@ -107,6 +100,8 @@ fun FieldDateAndTimeFrame(modifier: Modifier = Modifier) {
                         }
                     ) {
                         DatePicker(
+                            modifier = Modifier
+                                .padding(horizontal = 5.dp),
                             state = dateState,
                             colors = DatePickerDefaults.colors(
                                 todayContentColor = Blue,
@@ -157,37 +152,43 @@ fun FieldDateAndTimeFrame(modifier: Modifier = Modifier) {
 //                true
 //            )
 
-            val timeFormat = SimpleDateFormat("HH:mm")
-            val currentTime = timeFormat.format(Date())
-            var selectedHour by remember { mutableIntStateOf(Calendar.getInstance().get((Calendar.HOUR_OF_DAY))) }
-            var selectedMinute by remember { mutableIntStateOf(Calendar.getInstance().get((Calendar.MINUTE))) }
+//            val selectedHour by remember { mutableIntStateOf(Calendar.getInstance().get((Calendar.HOUR_OF_DAY))) }
+//            val selectedMinute by remember { mutableIntStateOf(Calendar.getInstance().get((Calendar.MINUTE))) }
 
-            val timeState = rememberTimePickerState(
-                initialHour = selectedHour,
-                initialMinute = selectedMinute
-            )
-            var selectedTime = rememberTimePickerState(
-                initialHour = selectedHour,
-                initialMinute = selectedMinute
-            )
-            var showDialog by remember { mutableStateOf(false) }
+
+            val calendar = Calendar.getInstance()
+            val hour = calendar[Calendar.HOUR_OF_DAY]
+            val minute = calendar[Calendar.MINUTE]
+
+
+            var showTimePicker by remember { mutableStateOf(false) }
+            var selectedTime by remember { mutableStateOf("Выберите время") }
+
+
+
             TextButton(
-                onClick = {
-                    dateDialogControllerTime = true
-                    showDialog = true
-                },
+                onClick = {showTimePicker = true},
                 modifier = Modifier
             ) {
-
-                if(dateDialogControllerTime == true){
-                    selectedTime = TimePickerWithDialog()
-                    dateDialogControllerTime = false
+                if (showTimePicker) {
+                    AdvancedTimePicker(
+                        onConfirm = { timePickerState ->
+                            // Обработка выбора времени
+                            selectedTime = String.format(
+                                "%02d:%02d",
+                                timePickerState.hour,
+                                timePickerState.minute
+                            )
+                            showTimePicker = false // Закрыть диалог
+                        },
+                        onDismiss = {
+                            showTimePicker = false // Закрыть диалог при отмене
+                        }
+                    )
                 }
-                var selTime = selectedTime.hour.toString()+":"+selectedTime.minute.toString()
 
 
-
-                Text(text = selTime,
+                Text(text = selectedTime,
                     fontSize = 18.sp,
                     color = Black
                 )
@@ -197,54 +198,6 @@ fun FieldDateAndTimeFrame(modifier: Modifier = Modifier) {
     SnackbarHost(snackbarHostState.value)
 }
 
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun TimePickerWithDialog(): TimePickerState
- {
-    var selectedHour by remember { mutableIntStateOf(Calendar.getInstance().get((Calendar.HOUR_OF_DAY))) }
-    var selectedMinute by remember { mutableIntStateOf(Calendar.getInstance().get((Calendar.MINUTE))) }
-    val timeState = rememberTimePickerState(
-        initialHour = selectedHour,
-        initialMinute = selectedMinute
-    )
-    var showDialog by remember { mutableStateOf(true) }
-
-    if (showDialog) {
-        BasicAlertDialog(
-            onDismissRequest = { showDialog = false },
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Column(
-                modifier = Modifier
-                    .background(color = Color.LightGray.copy(alpha = .3f))
-                    .padding(top = 28.dp, start = 20.dp, end = 20.dp, bottom = 12.dp),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                TimePicker(state = timeState)
-                Row(
-                    modifier = Modifier
-                        .padding(top = 12.dp)
-                        .fillMaxWidth(), horizontalArrangement = Arrangement.End
-                ) {
-                    TextButton(onClick = { showDialog = false }) {
-                        Text(text = "Dismiss")
-                    }
-                    TextButton(onClick = {
-                        showDialog = false
-                        selectedHour = timeState.hour
-                        selectedMinute = timeState.minute
-                    }) {
-                        Text(text = "Confirm")
-                    }
-                }
-            }
-        }
-    }
-    showDialog = true
-    return timeState
-}
 
 @Preview(showBackground = true)
 @Composable

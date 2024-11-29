@@ -52,7 +52,7 @@ fun Notes(modifier: Modifier = Modifier) {
             )
             Box(
                 modifier = Modifier
-                .fillMaxWidth()
+                    .fillMaxWidth()
             ) {
                 Text(
                     text = stringResource(R.string.textNotes),

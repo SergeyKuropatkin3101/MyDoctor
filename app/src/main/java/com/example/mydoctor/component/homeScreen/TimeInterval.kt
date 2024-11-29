@@ -11,16 +11,18 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.mydoctor.R
 import com.example.mydoctor.ui.theme.Black
 import com.example.mydoctor.ui.theme.White
 
 
 @Composable
-fun TimeInterval(modifier: Modifier = Modifier) {
+fun TimeInterval() {
     Row (
         horizontalArrangement = Arrangement.spacedBy(6.dp),
         modifier = Modifier
@@ -43,7 +45,7 @@ fun TimeInterval(modifier: Modifier = Modifier) {
                     .fillMaxWidth()
                     .weight(1f)
             ) {
-                Text(text = "День",
+                Text(text = stringResource(R.string.textDay),
                     fontSize = 14.sp,
                     textAlign = TextAlign.Center,
                     color = Black
@@ -56,7 +58,7 @@ fun TimeInterval(modifier: Modifier = Modifier) {
                     .fillMaxWidth()
                     .weight(1f)
             ) {
-                Text(text = "Неделя",
+                Text(text = stringResource(R.string.textWeek),
                     fontSize = 14.sp,
                     textAlign = TextAlign.Center,
                     color = Black)
@@ -68,7 +70,7 @@ fun TimeInterval(modifier: Modifier = Modifier) {
                     .fillMaxWidth()
                     .weight(1f)
             ) {
-                Text(text = "Месяц",
+                Text(text = stringResource(R.string.textMonth),
                     fontSize = 14.sp,
                     textAlign = TextAlign.Center,
                     color = Black)

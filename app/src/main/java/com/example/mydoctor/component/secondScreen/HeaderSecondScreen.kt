@@ -18,13 +18,16 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
+import com.example.mydoctor.Navigation.Routes
 import com.example.mydoctor.R
 import com.example.mydoctor.ui.theme.Black1000
 import com.example.mydoctor.ui.theme.White
 
 
 @Composable
-fun HeaderSecondScreen(modifier: Modifier = Modifier) {
+fun HeaderSecondScreen(navController: NavHostController) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -36,7 +39,7 @@ fun HeaderSecondScreen(modifier: Modifier = Modifier) {
             )
     ) {
         IconButton(
-            onClick = {},
+            onClick = {navController.navigate(Routes.HomeScreen.route)},
             modifier = Modifier
                 .align(Alignment.CenterStart)
                 .clip(RoundedCornerShape(9.dp))
@@ -65,5 +68,6 @@ fun HeaderSecondScreen(modifier: Modifier = Modifier) {
 @Preview(showBackground = true)
 @Composable
 fun HeaderSecondScreenPreview() {
-    HeaderSecondScreen()
+    val navController = rememberNavController()
+    HeaderSecondScreen(navController)
 }

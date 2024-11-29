@@ -2,8 +2,10 @@ package com.example.mydoctor.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-
-
+val SecondaryGrey = Color(0xFFCEDDE9)
+val CameraColor = Color(0xFFFF624D)
+val PlaceHolderColor = Color(0xFF83A0B9)
+val White_bg = Color(0xFFFAFAFE)
 val Blue = Color(0xFF0088FF)
 val Blue300 = Color(0x4D0088FF)
 val ColorEllipseBig = Color(0x4DFFC122)

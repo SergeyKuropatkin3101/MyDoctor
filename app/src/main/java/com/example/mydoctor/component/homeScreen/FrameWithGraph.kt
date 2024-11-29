@@ -17,6 +17,10 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -26,6 +30,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
+import com.example.mydoctor.Navigation.Routes
 import com.example.mydoctor.R
 import com.example.mydoctor.ui.theme.AddDataColor
 import com.example.mydoctor.ui.theme.Black300
@@ -34,9 +41,9 @@ import com.example.mydoctor.ui.theme.White
 import com.example.mydoctor.ui.theme.Yellow80
 
 @Composable
-fun FrameWithGraph(modifier: Modifier = Modifier) {
+fun FrameWithGraph(navController: NavHostController) {
     Column(
-        modifier = modifier
+        modifier = Modifier
             .padding(
                 17.dp,
                 16.dp
@@ -45,7 +52,7 @@ fun FrameWithGraph(modifier: Modifier = Modifier) {
             .background(White)
     ) {
         Column(
-            modifier = modifier
+            modifier = Modifier
             .padding(
                 16.dp,
                 24.dp,
@@ -53,13 +60,13 @@ fun FrameWithGraph(modifier: Modifier = Modifier) {
                 16.dp
             )
         ) {
-            Text(text = "Нет данных",
+            Text(text = stringResource(R.string.textNoData),
                 fontSize = 18.sp)
             Spacer(
                 modifier = Modifier
                     .height(16.dp)
             )
-            Text(text = "Сегодня",
+            Text(text = stringResource(R.string.TextToday),
                 fontSize = 10.sp
             )
         }
@@ -116,16 +123,20 @@ fun FrameWithGraph(modifier: Modifier = Modifier) {
         }
 
         Graph()
-
+        var enabledTooltip by remember {
+            mutableStateOf(true)
+        }
         TextButton (
-            onClick = { },
-            border = BorderStroke( width = Dp.Hairline, AddDataColor),
-            colors = ButtonDefaults.outlinedButtonColors(
-                containerColor = Color.White,
-                contentColor = AddDataColor,
-            ),
-            contentPadding = PaddingValues(16.dp,8.dp),
+            onClick = {
+                navController
+                    .navigate(
+                        Routes.SecondScreen.route
+                    ){
+                        launchSingleTop = true
+                    }
+            },
             modifier = Modifier
+
                 .align(Alignment.End)
                 .padding(
                     16.dp,
@@ -133,12 +144,36 @@ fun FrameWithGraph(modifier: Modifier = Modifier) {
                     16.dp,
                     24.dp
                 )
+                .tooltip(
+                    title = "Добавьте данные",
+                    text = "Добавить данные можно, кликнув на кнопку. Или попробуйте отсканировать данные на вашем аппарате.",
+                    enabled = enabledTooltip,
+                    onDismiss = {enabledTooltip = false}
+                ),
+            border = BorderStroke( width = Dp.Hairline, AddDataColor),
+            colors = ButtonDefaults.outlinedButtonColors(
+                containerColor = Color.White,
+                contentColor = AddDataColor,
+            ),
+            contentPadding = PaddingValues(16.dp,8.dp),
+
+
+
         ) {
+            /*PlainTooltipBox(
+            tooltip = { Text(text = "Yes, I am a tooltip") }
+        ) {
+            Button(
+                onClick = {},
+                modifier = Modifier.tooltipTrigger()
+            ) {
+                Text(text = "Android")
+            }
+        }*/
             Text(text = stringResource(R.string.addData),
                 color = AddDataColor,
                 fontSize = 12.sp,
-                lineHeight = 12.sp,
-                modifier = Modifier
+                lineHeight = 12.sp
             )
         }
 
@@ -149,5 +184,6 @@ fun FrameWithGraph(modifier: Modifier = Modifier) {
 @Preview(showBackground = true)
 @Composable
 fun FrameWithGraphPreview() {
-    FrameWithGraph()
+    val navController = rememberNavController()
+    FrameWithGraph(navController)
 }

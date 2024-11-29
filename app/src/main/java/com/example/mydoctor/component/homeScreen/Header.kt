@@ -1,7 +1,5 @@
 package com.example.mydoctor.component.homeScreen
 
-import android.annotation.SuppressLint
-import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -17,7 +15,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -34,22 +31,20 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
+import com.example.mydoctor.Navigation.Routes
 import com.example.mydoctor.R
-import com.example.mydoctor.component.secondScreen.SecondScreen
 import com.example.mydoctor.ui.theme.Black1000
-import com.example.mydoctor.ui.theme.MyDoctorTheme
 import com.example.mydoctor.ui.theme.White
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
 
-@SuppressLint("SimpleDateFormat")
 @Composable
-fun Header(modifier: Modifier = Modifier){
-    Column(
-        modifier = Modifier
-    ) {
+fun Header(navController:NavHostController){
+    Column {
         Row(
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
@@ -59,7 +54,7 @@ fun Header(modifier: Modifier = Modifier){
                 imageVector = ImageVector.vectorResource(id = R.drawable.logo),
                 contentDescription = "Logo"
             )
-            Spacer(modifier = modifier.width(6.dp))
+            Spacer(modifier = Modifier.width(6.dp))
             val exo2font = FontFamily(
                 Font(R.font.exo2_regular, FontWeight.W600)
             )
@@ -111,7 +106,7 @@ fun Header(modifier: Modifier = Modifier){
                 }
 
                 IconButton(
-                    onClick = { },
+                    onClick = {navController.navigate(Routes.SecondScreen.route) },
                     modifier = Modifier
                         .align(Alignment.CenterEnd)
                         .clip(RoundedCornerShape(9.dp))
@@ -120,7 +115,7 @@ fun Header(modifier: Modifier = Modifier){
                 ) {
                     Icon(
                         painterResource(R.drawable.plus),
-                        contentDescription = "Добавление данных",
+                        contentDescription = stringResource(R.string.textAddData),
                         tint = Black1000,
                         modifier = Modifier
                             .padding(4.dp)
@@ -137,5 +132,6 @@ fun Header(modifier: Modifier = Modifier){
 @Preview(showBackground = true)
 @Composable
 fun HeaderPreview() {
-    Header()
+    val navController = rememberNavController()
+    Header(navController)
 }
