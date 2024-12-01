@@ -1,4 +1,4 @@
-package com.example.mydoctor.component.secondScreen
+package com.example.mydoctor.presentation.secondScreen
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
@@ -21,9 +21,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.mydoctor.R
+import com.example.mydoctor.ViewModelProject.PressureViewModel
+import com.example.mydoctor.ui.theme.Blue
 import com.example.mydoctor.ui.theme.Blue300
 import com.example.mydoctor.ui.theme.ColorEllipseBig
 import com.example.mydoctor.ui.theme.ColorEllipseSmall
@@ -32,7 +35,10 @@ import com.example.mydoctor.ui.theme.White_bg
 
 
 @Composable
-fun SecondScreen(navController: NavHostController, modifier: Modifier) {
+fun SecondScreen(
+    vm: PressureViewModel,
+    navController: NavHostController,
+    modifier: Modifier) {
     Box(
         modifier = modifier
             .background(White_bg)
@@ -86,13 +92,15 @@ fun SecondScreen(navController: NavHostController, modifier: Modifier) {
             }
 
         }
-        FrameWithContent(navController)
+        FrameWithContent(vm,navController)
         Button(
-            onClick = { /*TODO*/ },
+            onClick = { vm.insertData() },
             colors = ButtonDefaults.outlinedButtonColors(
-                containerColor = Blue300,
+                disabledContainerColor = Blue300,
+                containerColor = Blue,
                 contentColor = White,
             ),
+            enabled = vm.saveButtonEnabled.value,
             modifier = Modifier
                 .align(Alignment.BottomCenter)
                 .fillMaxWidth()
@@ -114,5 +122,6 @@ fun SecondScreen(navController: NavHostController, modifier: Modifier) {
 @Composable
 fun SecondScreenPreview() {
     val navController = rememberNavController()
-    SecondScreen(navController = navController, modifier = Modifier)
+    val vm = hiltViewModel<PressureViewModel>()
+    SecondScreen(vm,navController = navController, modifier = Modifier)
 }

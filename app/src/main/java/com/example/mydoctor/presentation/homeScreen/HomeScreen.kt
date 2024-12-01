@@ -1,4 +1,4 @@
-package com.example.mydoctor.component.homeScreen
+package com.example.mydoctor.presentation.homeScreen
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
@@ -14,14 +14,20 @@ import androidx.compose.ui.graphics.TileMode
 import androidx.compose.ui.graphics.drawscope.translate
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.example.mydoctor.ViewModelProject.PressureViewModel
 import com.example.mydoctor.ui.theme.ColorEllipseBig
 import com.example.mydoctor.ui.theme.ColorEllipseSmall
 import com.example.mydoctor.ui.theme.White_bg
 
 @Composable
-fun HomeScreen(navController: NavHostController, modifier: Modifier = Modifier) {
+fun HomeScreen(
+    vm: PressureViewModel,
+    navController: NavHostController,
+    modifier: Modifier = Modifier
+) {
     Box (
         modifier = modifier
             .background(White_bg)
@@ -30,9 +36,9 @@ fun HomeScreen(navController: NavHostController, modifier: Modifier = Modifier) 
             modifier = Modifier
                 .fillMaxSize()
         ) {
-            translate(left = -4.dp.toPx(), top = 98.dp.toPx()) {
+//            translate(left = -4.dp.toPx(), top = 98.dp.toPx()) {
                 val radiusCircleSmall = 39.dp.toPx()
-                val centerCircle = Offset(x = size.width, y = 0.0f)
+                val centerCircle = Offset(x = size.width-4.dp.toPx(), y = 98.dp.toPx())
                 val colorStops = arrayOf(
                     0.5f to ColorEllipseSmall,
                     1f to Color.Transparent)
@@ -48,7 +54,7 @@ fun HomeScreen(navController: NavHostController, modifier: Modifier = Modifier) 
                     center = centerCircle
                 )
             }
-        }
+//        }
         Canvas(
             modifier = Modifier
                 .fillMaxSize()
@@ -84,5 +90,6 @@ fun HomeScreen(navController: NavHostController, modifier: Modifier = Modifier) 
 @Composable
 fun HomeScreenPreview() {
     val navController = rememberNavController()
-    HomeScreen(navController = navController, modifier = Modifier)
+    val vm = hiltViewModel<PressureViewModel>()
+    HomeScreen(vm, navController = navController, modifier = Modifier)
 }

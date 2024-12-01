@@ -1,4 +1,4 @@
-package com.example.mydoctor.component.homeScreen
+package com.example.mydoctor.presentation.homeScreen
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Canvas
@@ -11,11 +11,12 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -126,7 +127,7 @@ fun FrameWithGraph(navController: NavHostController) {
         var enabledTooltip by remember {
             mutableStateOf(true)
         }
-        TextButton (
+        OutlinedButton (
             onClick = {
                 navController
                     .navigate(
@@ -135,8 +136,15 @@ fun FrameWithGraph(navController: NavHostController) {
                         launchSingleTop = true
                     }
             },
-            modifier = Modifier
 
+            border = BorderStroke( width = Dp.Hairline, AddDataColor),
+            colors = ButtonDefaults.outlinedButtonColors(
+                containerColor = Color.White,
+                contentColor = AddDataColor,
+            ),
+            contentPadding = PaddingValues(0.dp,0.dp),
+            modifier = Modifier
+                .wrapContentSize()
                 .align(Alignment.End)
                 .padding(
                     16.dp,
@@ -149,31 +157,18 @@ fun FrameWithGraph(navController: NavHostController) {
                     text = "Добавить данные можно, кликнув на кнопку. Или попробуйте отсканировать данные на вашем аппарате.",
                     enabled = enabledTooltip,
                     onDismiss = {enabledTooltip = false}
-                ),
-            border = BorderStroke( width = Dp.Hairline, AddDataColor),
-            colors = ButtonDefaults.outlinedButtonColors(
-                containerColor = Color.White,
-                contentColor = AddDataColor,
-            ),
-            contentPadding = PaddingValues(16.dp,8.dp),
+                )
 
 
 
         ) {
-            /*PlainTooltipBox(
-            tooltip = { Text(text = "Yes, I am a tooltip") }
-        ) {
-            Button(
-                onClick = {},
-                modifier = Modifier.tooltipTrigger()
-            ) {
-                Text(text = "Android")
-            }
-        }*/
+
             Text(text = stringResource(R.string.addData),
                 color = AddDataColor,
                 fontSize = 12.sp,
-                lineHeight = 12.sp
+                lineHeight = 12.sp,
+                modifier = Modifier
+                    .padding(16.dp,8.dp)
             )
         }
 

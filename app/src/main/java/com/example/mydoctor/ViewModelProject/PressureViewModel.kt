@@ -1,39 +1,70 @@
 package com.example.mydoctor.ViewModelProject
 
-import androidx.compose.runtime.State
+import android.util.Log
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mydoctor.data.DataPressure
-import com.example.mydoctor.data.DataPressureDao
+import com.example.mydoctor.data.MainDb
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class PressureViewModel (private val dataPressureDao: DataPressureDao) : ViewModel() {
+@HiltViewModel
+class PressureViewModel @Inject constructor (
+    val mainDb: MainDb
+) : ViewModel() {
 
-    private val _dataPressure = mutableStateOf<List<DataPressure>>(emptyList())
-    val dataPressure: State<List<DataPressure>> get() = _dataPressure
+    val valueUpperPressure = mutableStateOf<String>("")
+    val valueLowerPressure = mutableStateOf<String>("")
+    var saveButtonEnabled = mutableStateOf<Boolean>(false)
 
-    init {
-        loadDataPressures()
+    var valuePulse = mutableStateOf<String>("")
+    var valueDateOfMeasurements = mutableStateOf<Long>(0L)
+
+    var valueTimeOfMeasurements = mutableStateOf<Long>(0L)
+    var valueNoteOfMeasurements = mutableStateOf<String>("")
+
+    fun isSaveButtonEnabled (){
+        saveButtonEnabled.value = valueUpperPressure.value.isNotEmpty()
+                && valueLowerPressure.value.isNotEmpty()
+    }
+    var dialogControllerDate = mutableStateOf(false)
+    var selectedDate = mutableLongStateOf(System.currentTimeMillis())
+
+    val snackbarHostState =  mutableStateOf(SnackbarHostState())
+
+    fun insertData(){
+        saveButtonEnabled.value = false
+        Log.i("tag",
+            valuePulse.value.toIntOrNull().toString()
+        )
+        insertDataPressure(
+            DataPressure(
+            upperDataPressure = valueUpperPressure.value,
+            lowerDataPressure = valueLowerPressure.value,
+            pulse = valuePulse.value,
+            dateOfMeasurements = valueDateOfMeasurements.value,
+            timeOfMeasurements = valueTimeOfMeasurements.value,
+            noteOfMeasurements = valueNoteOfMeasurements.value
+            )
+        )
     }
 
-    private fun loadDataPressures() {
+    val DisplayDataPressure = mutableStateOf<List<DataPressure>>(emptyList())
+
+    private fun getTodayDataPressures() {
         viewModelScope.launch {
-            _dataPressure.value = dataPressureDao.getDatesToday()
+            DisplayDataPressure.value = mainDb.dao.getDatesToday()
         }
     }
 
-//    fun addDataPressure(taskName: String) {
-//        viewModelScope.launch {
-//            dataPressureDao.insert(DataPressure())
-//            loadDataPressures() // Обновляем список задач после добавления
-//        }
-//    }
-
-//    fun deleteTask(taskId: Int) {
-//        viewModelScope.launch {
-//            taskDao.delete(taskId)
-//            loadTasks() // Обновляем список задач после удаления
-//        }
-//    }
+    fun insertDataPressure(dataPressure: DataPressure) = viewModelScope.launch {
+        mainDb.dao.insertDataPressure(dataPressure)
+    }
+    fun deleteDataPressure(dataPressure: DataPressure) = viewModelScope.launch {
+        mainDb.dao.deleteDataPressure(dataPressure)
+    }
 }

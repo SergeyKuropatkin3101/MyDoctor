@@ -1,4 +1,4 @@
-package com.example.mydoctor.component.homeScreen
+package com.example.mydoctor.presentation.homeScreen
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.fillMaxWidth

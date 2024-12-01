@@ -11,15 +11,14 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
 import com.example.mydoctor.Navigation.NavGraph
 import com.example.mydoctor.ui.theme.MyDoctorTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-//        WindowInsetsControllerCompat()
-//        val db = InventoryDatabase.getDatabase(this)
-//        val dataPressureDao = db.dataPressureDao()
-//        val viewModel = PressureViewModel(dataPressureDao)
 
         setContent {
             MyDoctorTheme {
@@ -28,8 +27,8 @@ class MainActivity : ComponentActivity() {
                     NavGraph(
                         navController = navController,
                         modifier = Modifier
-                        .fillMaxSize()
-                        .padding(innerPadding))
+                            .fillMaxSize()
+                            .padding(innerPadding))
                 }
 
             }

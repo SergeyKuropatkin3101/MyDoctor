@@ -1,4 +1,4 @@
-package com.example.mydoctor.component.homeScreen
+package com.example.mydoctor.presentation.homeScreen
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable

@@ -1,17 +1,21 @@
-package com.example.mydoctor.component.homeScreen
+package com.example.mydoctor.presentation.homeScreen
 
 
+import android.util.Log
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -28,6 +32,7 @@ import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.geometry.RoundRect
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.ClipOp
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
@@ -40,12 +45,13 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.round
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.unit.toOffset
-import androidx.compose.ui.unit.toSize
 import androidx.compose.ui.window.Popup
 import com.example.mydoctor.R
 import com.example.mydoctor.ui.theme.Black1000
@@ -68,7 +74,9 @@ fun Modifier.tooltip(
     val density = LocalDensity.current
     val screenWidthPx = remember { with(density) { configuration.screenWidthDp.dp.roundToPx() } }
     val screenHeightPx = remember { with(density) { configuration.screenHeightDp.dp.roundToPx() } }
-
+    val statusBarHeight = WindowInsets.statusBars.asPaddingValues().calculateTopPadding()
+    val statusBarHeightPx = remember { with(density) { statusBarHeight.roundToPx() } }
+    Log.i("height",statusBarHeightPx.toString())
     var positionInRootCompotent by remember { mutableStateOf(IntOffset.Zero) }
     var tooltipSize by remember { mutableStateOf(IntSize(0, 0)) }
     var componentSize by remember { mutableStateOf(IntSize(0, 0)) }
@@ -91,8 +99,10 @@ fun Modifier.tooltip(
                         highlightComponent = highlightComponent,
                         positionInRoot = positionInRootCompotent,
                         componentSize = componentSize,
+                        statusBarHeightPx = statusBarHeightPx,
                         backgroundColor = Black1000,
-                        backgroundAlpha = 0.2f
+                        backgroundAlpha = 0.2f,
+                        density = density
                     )
                     .clickable(
                         onClick = {
@@ -116,7 +126,7 @@ fun Modifier.tooltip(
 
     return this then Modifier.onPlaced {
         componentSize = it.size
-        positionInRootCompotent = it.positionInRoot().toIntOffset()
+        positionInRootCompotent = it.positionInRoot().round()
     }
 }
 
@@ -141,7 +151,7 @@ fun ArrowTooltip(
                 .align(Alignment.TopEnd),
             onClick = { onDismiss() }
         ) {
-            Icon(
+            Image(
                 painterResource(
                     id = R.drawable.iconexit
                 ),
@@ -155,7 +165,7 @@ fun ArrowTooltip(
         ) {
 
 
-            Icon(
+            Image(
                 painterResource(
                     id = R.drawable.iconcamera
                 ),
@@ -202,22 +212,31 @@ private fun calculateOffset(
     )
 }
 
+@Composable
 private fun Modifier.drawOverlayBackground(
     showOverlay: Boolean,
     highlightComponent: Boolean,
     positionInRoot: IntOffset,
     componentSize: IntSize,
     backgroundColor: Color,
-    backgroundAlpha: Float
+    backgroundAlpha: Float,
+    statusBarHeightPx: Int,
+    density: Density
 ) : Modifier {
     return if (showOverlay) {
 
         if (highlightComponent) {
+            val oneDpToPx = remember { with(density) { 1.dp.roundToPx() } }
+
             val positionInRootComponent = IntOffset(
                 x = positionInRoot.x,
-                y = positionInRoot.y-((componentSize.toSize().height)*3/5).toInt()
+                y = (positionInRoot.y-statusBarHeightPx+3.8*oneDpToPx).toInt()
             )
-            val CornerRadiusComponent = CornerRadius(componentSize.height/2.toFloat())
+            val componentSizeNew = Size(
+                componentSize.width.toFloat(),
+                (componentSize.height-oneDpToPx*8).toFloat()
+            )
+            val cornerRadiusComponent = CornerRadius(componentSize.height/2.toFloat())
             // Если значение highlightComponent установлено в true, нам нужно создать Path и Rect с положением
             // и размером компонента и нарисовать фон, обрезав Path.
             drawBehind {
@@ -226,9 +245,9 @@ private fun Modifier.drawOverlayBackground(
                         RoundRect(
                             Rect(
                                 positionInRootComponent.toOffset(),
-                                componentSize.toSize()
+                                componentSizeNew
                             ),
-                            CornerRadiusComponent
+                            cornerRadiusComponent
                         )
                     )
                 }

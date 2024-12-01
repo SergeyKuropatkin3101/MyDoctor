@@ -1,4 +1,4 @@
-package com.example.mydoctor.component.secondScreen
+package com.example.mydoctor.presentation.secondScreen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -14,14 +14,18 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.mydoctor.R
+import com.example.mydoctor.ViewModelProject.PressureViewModel
 import com.example.mydoctor.ui.theme.Black1000
 import com.example.mydoctor.ui.theme.Black300
 import com.example.mydoctor.ui.theme.White
 
 
 @Composable
-fun AddDataNotes() {
+fun AddDataNotes(
+    vm: PressureViewModel
+) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -70,6 +74,7 @@ fun AddDataNotes() {
 @Preview(showBackground = true)
 @Composable
 fun AddDataNotesPreview() {
-    AddDataNotes()
+    val vm = hiltViewModel<PressureViewModel>()
+    AddDataNotes(vm)
 }
 
