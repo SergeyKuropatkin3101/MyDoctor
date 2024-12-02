@@ -20,31 +20,6 @@ fun Graph() {
     }
 }
 
-
-/*    Box (modifier = Modifier.fillMaxSize()){
-        Text("kfhgkds" +
-                "]dfgd" +
-                "drgd" +
-                "rg" +
-                "rg" +
-                "rghtsrtthdthdthdhdhdthdthdthdthdthdhdhdthdthhfg")
-        val popupWidth = 200.dp
-        val popupHeight = 50.dp
-        val cornerSize = 16.dp
-        Popup(alignment = Alignment.Center)
-        {         // Draw a rectangle shape with rounded corners inside the popup
-              Box(
-                  Modifier
-                      .size(popupWidth, popupHeight)
-                      .background(White, RoundedCornerShape(cornerSize))
-              ){
-                  Text("slajkif;aksh")
-              }
-        }
-    }
-
-}
-*/
 @Preview(showBackground = true)
 @Composable
 fun GraphPreview() {

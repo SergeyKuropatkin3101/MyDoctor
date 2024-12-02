@@ -1,7 +1,6 @@
 package com.example.mydoctor.presentation.homeScreen
 
 
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -76,7 +75,6 @@ fun Modifier.tooltip(
     val screenHeightPx = remember { with(density) { configuration.screenHeightDp.dp.roundToPx() } }
     val statusBarHeight = WindowInsets.statusBars.asPaddingValues().calculateTopPadding()
     val statusBarHeightPx = remember { with(density) { statusBarHeight.roundToPx() } }
-    Log.i("height",statusBarHeightPx.toString())
     var positionInRootCompotent by remember { mutableStateOf(IntOffset.Zero) }
     var tooltipSize by remember { mutableStateOf(IntSize(0, 0)) }
     var componentSize by remember { mutableStateOf(IntSize(0, 0)) }

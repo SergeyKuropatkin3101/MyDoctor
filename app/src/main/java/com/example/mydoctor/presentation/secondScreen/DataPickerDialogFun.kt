@@ -1,6 +1,5 @@
 package com.example.mydoctor.presentation.secondScreen
 
-import android.util.Log
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDefaults
@@ -8,7 +7,6 @@ import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -21,22 +19,17 @@ import com.example.mydoctor.ui.theme.White
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DataPickerDialogFun(
-    vm: PressureViewModel
+    vm: PressureViewModel,
 ) {
-
-    val dateState = rememberDatePickerState()
 
     DatePickerDialog(
         onDismissRequest = { vm.dialogControllerDate.value = false },
         confirmButton = {
             TextButton(onClick = {
-                if (dateState.selectedDateMillis != null) {
-                    vm.selectedDate.value = dateState.selectedDateMillis!!
-                    Log.i("dsf", vm.selectedDate.value.toString())
-
-
-
+                if (vm.datePickerState.value!!.selectedDateMillis != null) {
+                    vm.selectedDate.longValue = vm.datePickerState.value!!.selectedDateMillis!!
                 }
+                vm.isCorrectDate()
                 vm.dialogControllerDate.value = false
             }
             ) {
@@ -60,7 +53,7 @@ fun DataPickerDialogFun(
         DatePicker(
             modifier = Modifier
                 .padding(horizontal = 5.dp),
-            state = dateState,
+            state = vm.datePickerState.value!!,
             colors = DatePickerDefaults.colors(
                 todayContentColor = Blue,
                 todayDateBorderColor = Blue,

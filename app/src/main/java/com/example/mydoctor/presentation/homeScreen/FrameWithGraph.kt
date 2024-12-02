@@ -18,10 +18,8 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -31,18 +29,21 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.mydoctor.Navigation.Routes
 import com.example.mydoctor.R
+import com.example.mydoctor.ViewModelProject.PressureViewModel
 import com.example.mydoctor.ui.theme.AddDataColor
 import com.example.mydoctor.ui.theme.Black300
 import com.example.mydoctor.ui.theme.Orange80
 import com.example.mydoctor.ui.theme.White
 import com.example.mydoctor.ui.theme.Yellow80
+import kotlinx.coroutines.launch
 
 @Composable
-fun FrameWithGraph(navController: NavHostController) {
+fun FrameWithGraph(vm: PressureViewModel, navController: NavHostController) {
     Column(
         modifier = Modifier
             .padding(
@@ -124,8 +125,12 @@ fun FrameWithGraph(navController: NavHostController) {
         }
 
         Graph()
-        var enabledTooltip by remember {
-            mutableStateOf(true)
+
+        val scope = rememberCoroutineScope()
+        LaunchedEffect(Unit) {
+            scope.launch() {
+                vm.delayTooltip()
+            }
         }
         OutlinedButton (
             onClick = {
@@ -153,10 +158,10 @@ fun FrameWithGraph(navController: NavHostController) {
                     24.dp
                 )
                 .tooltip(
-                    title = "Добавьте данные",
-                    text = "Добавить данные можно, кликнув на кнопку. Или попробуйте отсканировать данные на вашем аппарате.",
-                    enabled = enabledTooltip,
-                    onDismiss = {enabledTooltip = false}
+                    title = stringResource(R.string.tooltipTitle),
+                    text = stringResource(R.string.tooltipText),
+                    enabled = vm.enabledTooltip.value,
+                    onDismiss = { vm.enabledTooltip.value = false }
                 )
 
 
@@ -179,6 +184,7 @@ fun FrameWithGraph(navController: NavHostController) {
 @Preview(showBackground = true)
 @Composable
 fun FrameWithGraphPreview() {
+    val vm = hiltViewModel<PressureViewModel>()
     val navController = rememberNavController()
-    FrameWithGraph(navController)
+    FrameWithGraph(vm, navController)
 }

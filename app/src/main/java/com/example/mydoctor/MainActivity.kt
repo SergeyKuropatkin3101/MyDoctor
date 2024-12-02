@@ -7,9 +7,14 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.rememberNavController
 import com.example.mydoctor.Navigation.NavGraph
+import com.example.mydoctor.ViewModelProject.PressureViewModel
 import com.example.mydoctor.ui.theme.MyDoctorTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -19,16 +24,22 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-
         setContent {
+            val snackbarHostState = remember { SnackbarHostState() }
+            val viewModel = hiltViewModel<PressureViewModel>()
+            viewModel.snackbarHostState.value = snackbarHostState
             MyDoctorTheme {
-                Scaffold{ innerPadding ->
+                Scaffold(
+                    snackbarHost = { SnackbarHost(snackbarHostState) }
+                ){ innerPadding ->
                     val navController = rememberNavController()
                     NavGraph(
                         navController = navController,
                         modifier = Modifier
                             .fillMaxSize()
-                            .padding(innerPadding))
+                            .padding(innerPadding),
+                        viewModel)
+
                 }
 
             }

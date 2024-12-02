@@ -2,7 +2,6 @@ package com.example.mydoctor.Navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -11,9 +10,9 @@ import com.example.mydoctor.presentation.homeScreen.HomeScreen
 import com.example.mydoctor.presentation.secondScreen.SecondScreen
 
 @Composable
-fun NavGraph(navController: NavHostController, modifier: Modifier) {
+fun NavGraph(navController: NavHostController, modifier: Modifier, viewModel: PressureViewModel) {
 
-    val viewModel = hiltViewModel<PressureViewModel>()
+
     NavHost(
         navController = navController,
         startDestination = Routes.HomeScreen.route)

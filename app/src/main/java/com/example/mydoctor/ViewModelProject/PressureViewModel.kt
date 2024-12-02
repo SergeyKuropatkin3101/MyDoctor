@@ -1,7 +1,9 @@
 package com.example.mydoctor.ViewModelProject
 
-import android.util.Log
+import androidx.compose.material3.DatePickerState
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -9,7 +11,11 @@ import androidx.lifecycle.viewModelScope
 import com.example.mydoctor.data.DataPressure
 import com.example.mydoctor.data.MainDb
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Date
 import javax.inject.Inject
 
 @HiltViewModel
@@ -22,9 +28,9 @@ class PressureViewModel @Inject constructor (
     var saveButtonEnabled = mutableStateOf<Boolean>(false)
 
     var valuePulse = mutableStateOf<String>("")
-    var valueDateOfMeasurements = mutableStateOf<Long>(0L)
+    var valueDateOfMeasurements = mutableStateOf<Date>(Date())
 
-    var valueTimeOfMeasurements = mutableStateOf<Long>(0L)
+    var valueTimeOfMeasurements = mutableStateOf<Date>(Date())
     var valueNoteOfMeasurements = mutableStateOf<String>("")
 
     fun isSaveButtonEnabled (){
@@ -34,13 +40,19 @@ class PressureViewModel @Inject constructor (
     var dialogControllerDate = mutableStateOf(false)
     var selectedDate = mutableLongStateOf(System.currentTimeMillis())
 
-    val snackbarHostState =  mutableStateOf(SnackbarHostState())
+
+    var enabledTooltip = mutableStateOf(true)
+    var snackbarHostVisible = mutableStateOf(false)
+
+    suspend fun delayTooltip() {
+        delay(10000)
+        enabledTooltip.value = false
+    }
+
+    var snackbarHostState =  mutableStateOf(SnackbarHostState())
 
     fun insertData(){
         saveButtonEnabled.value = false
-        Log.i("tag",
-            valuePulse.value.toIntOrNull().toString()
-        )
         insertDataPressure(
             DataPressure(
             upperDataPressure = valueUpperPressure.value,
@@ -53,18 +65,78 @@ class PressureViewModel @Inject constructor (
         )
     }
 
-    val DisplayDataPressure = mutableStateOf<List<DataPressure>>(emptyList())
+    private val displayDataPressure = mutableStateOf<List<DataPressure>>(emptyList())
 
     private fun getTodayDataPressures() {
         viewModelScope.launch {
-            DisplayDataPressure.value = mainDb.dao.getDatesToday()
+            displayDataPressure.value = mainDb.dao.getDatesToday()
         }
     }
 
-    fun insertDataPressure(dataPressure: DataPressure) = viewModelScope.launch {
+    private fun insertDataPressure(dataPressure: DataPressure) = viewModelScope.launch {
         mainDb.dao.insertDataPressure(dataPressure)
     }
     fun deleteDataPressure(dataPressure: DataPressure) = viewModelScope.launch {
         mainDb.dao.deleteDataPressure(dataPressure)
     }
+    @OptIn(ExperimentalMaterial3Api::class)
+    val datePickerState = mutableStateOf<DatePickerState?>(null)
+
+
+    private val dataFormat = SimpleDateFormat(
+        "dd.MM.yyyy"
+    )
+
+
+    val currentDate = dataFormat.format(Date())
+    var textDate = mutableStateOf<String>(currentDate)
+    fun isCorrectDate() {
+
+        val selectedDateWithFormat = dataFormat.format(selectedDate.longValue)
+        val startDate = dataFormat.parse(selectedDateWithFormat)
+        val startDateC = dataFormat.parse(currentDate)
+
+        if (startDateC.compareTo(startDate) > 0) {
+            snackbarHostVisible.value = true
+            textDate.value = currentDate
+            valueDateOfMeasurements.value = startDateC
+        } else {
+            textDate.value = selectedDateWithFormat
+            valueDateOfMeasurements.value = startDate
+        }
+    }
+
+
+    private val calendarCurrent: Calendar = Calendar.getInstance()
+    val hour = mutableIntStateOf( calendarCurrent[Calendar.HOUR_OF_DAY])
+    val minute = mutableIntStateOf(calendarCurrent[Calendar.MINUTE])
+
+    var showTimePicker = mutableStateOf(false)
+    var selectedTime = mutableStateOf(String.format("%02d:%02d",hour.value,minute.value))
+
+
+    /*fun isCorrectTime() {
+
+         val dataFormatWithHourAndMinute = SimpleDateFormat(
+        "dd.MM.yyyy HH:mm"
+         )
+
+        val selectedTimWithFormat = dataFormat.format(selectedDate.longValue)
+        val startDate = dataFormat.parse(selectedDateWithFormat)
+        val startDateC = dataFormat.parse(currentDate)
+
+        if (startDateC.compareTo(startDate) > 0) {
+            snackbarHostVisible.value = true
+            textDate.value = currentDate
+            valueDateOfMeasurements.value = startDateC
+        } else {
+            textDate.value = selectedDateWithFormat
+            valueDateOfMeasurements.value = startDate
+        }
+    }*/
+
+    /** Determines whether the time picker is dial or input */
+    var showDial =  mutableStateOf(true)
+
+
 }

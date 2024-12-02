@@ -31,12 +31,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.mydoctor.R
+import com.example.mydoctor.ViewModelProject.PressureViewModel
 import com.example.mydoctor.ui.theme.Black1000
 import com.example.mydoctor.ui.theme.Black500
 import com.example.mydoctor.ui.theme.Blue
@@ -48,23 +52,21 @@ import java.util.Calendar
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AdvancedTimePicker(
+    vm: PressureViewModel,
     onConfirm: (TimePickerState) -> Unit,
     onDismiss: () -> Unit,
 ) {
 
-    val currentTime = Calendar.getInstance()
 
     val timePickerState = rememberTimePickerState(
-        initialHour = currentTime.get(Calendar.HOUR_OF_DAY),
-        initialMinute = currentTime.get(Calendar.MINUTE),
+        initialHour = vm.hour.value,
+        initialMinute = vm.minute.value,
         is24Hour = true,
     )
 
-    /** Determines whether the time picker is dial or input */
-    var showDial by remember { mutableStateOf(true) }
 
     /** The icon used for the icon button that switches from dial to input */
-    val toggleIcon = if (showDial) {
+    val toggleIcon = if (vm.showDial.value) {
         ImageVector.vectorResource(id = R.drawable.iconkeyboard)
     } else {
         Icons.Filled.AccessTime
@@ -74,7 +76,7 @@ fun AdvancedTimePicker(
         onDismiss = { onDismiss() },
         onConfirm = { onConfirm(timePickerState) },
         toggle = {
-            IconButton(onClick = { showDial = !showDial }) {
+            IconButton(onClick = { vm.showDial.value = !vm.showDial.value }) {
 
                 Icon(
                     imageVector = toggleIcon,
@@ -92,7 +94,7 @@ fun AdvancedTimePicker(
             clockDialColor = White_bg,
             timeSelectorSelectedContentColor = Black1000
         )
-        if (showDial) {
+        if (vm.showDial.value) {
             TimePicker(
                 state = timePickerState,
                 colors = timePickerAndInputColors
@@ -108,7 +110,7 @@ fun AdvancedTimePicker(
 
 @Composable
 fun AdvancedTimePickerDialog(
-    title: String = "Select Time",
+    title: String = stringResource(R.string.selectTime),
     onDismiss: () -> Unit,
     onConfirm: () -> Unit,
     toggle: @Composable () -> Unit = {},
@@ -140,7 +142,9 @@ fun AdvancedTimePickerDialog(
                         .fillMaxWidth()
                         .padding(bottom = 20.dp),
                     text = title,
-                    style = MaterialTheme.typography.labelMedium
+                    color = Black500,
+                    fontSize = 12.sp,
+                    lineHeight = 16.sp
                 )
                 content()
                 Row(
@@ -169,7 +173,9 @@ fun AdvancedTimePickerExamplePreview() {
     var showTimePicker by remember { mutableStateOf(false) }
     var selectedTime by remember { mutableStateOf("Выберите время") }
 
+    val vm = hiltViewModel<PressureViewModel>()
     AdvancedTimePicker(
+        vm,
         onConfirm = { timePickerState ->
             // Обработка выбора времени
             selectedTime = String.format(

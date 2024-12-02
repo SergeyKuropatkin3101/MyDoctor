@@ -23,4 +23,7 @@
     <string name="textWeek">Неделя</string>
     <string name="textMonth">Месяц</string>
     <string name="textSave">Сохранить</string>
+    <string name="tooltipTitle">Добавьте данные</string>
+    <string name="tooltipText">Добавить данные можно, кликнув на кнопку. Или попробуйте отсканировать данные на вашем аппарате.</string>
+    <string name="selectTime">Select Time</string>
 </resources>

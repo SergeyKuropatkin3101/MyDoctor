@@ -2,6 +2,7 @@ package com.example.mydoctor.data
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.util.Date
 
 @Entity
 data class DataPressure(
@@ -10,8 +11,8 @@ data class DataPressure(
     var upperDataPressure: String,
     var lowerDataPressure: String,
     var pulse: String,
-    var dateOfMeasurements: Long,
-    var timeOfMeasurements: Long,
+    var dateOfMeasurements: Date,
+    var timeOfMeasurements: Date,
     var noteOfMeasurements: String?
 
 )
