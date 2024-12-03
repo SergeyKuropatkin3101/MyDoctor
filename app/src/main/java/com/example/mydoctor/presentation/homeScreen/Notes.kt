@@ -31,7 +31,7 @@ import com.example.mydoctor.ui.theme.White
 
 
 @Composable
-fun Notes(modifier: Modifier = Modifier) {
+fun Notes() {
     Column(
         modifier = Modifier
             .padding(
