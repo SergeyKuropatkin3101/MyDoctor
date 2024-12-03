@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -18,7 +19,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.mydoctor.R
 import com.example.mydoctor.ViewModelProject.PressureViewModel
 import com.example.mydoctor.ui.theme.Black1000
-import com.example.mydoctor.ui.theme.Black300
+import com.example.mydoctor.ui.theme.PlaceHolderColor
 import com.example.mydoctor.ui.theme.White
 
 
@@ -51,9 +52,17 @@ fun AddDataNotes(
 
         }
 
-        Text(text = stringResource(R.string.descriptionCondition),
-            fontSize = 18.sp,
-            color = Black300,
+        val textPlaceHolder = stringResource(R.string.descriptionCondition)
+        OutlinedTextField(
+            value = vm.noteOfMeasurementsState.value,
+            onValueChange = {vm.noteOfMeasurementsState.value = it},
+            placeholder = {
+                Text(
+                    textPlaceHolder,
+                color = PlaceHolderColor,
+                fontSize =  18.sp
+                )
+            },
             modifier = Modifier
                 .padding(
                     16.dp,
@@ -62,9 +71,8 @@ fun AddDataNotes(
                     16.dp
                 )
                 .fillMaxWidth()
-                .clip(RoundedCornerShape(24.dp))
+                .clip(RoundedCornerShape(14.dp))
                 .background(White)
-                .padding(16.dp)
         )
     }
 }

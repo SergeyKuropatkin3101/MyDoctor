@@ -9,20 +9,25 @@ import androidx.room.Query
 @Dao
 interface DataPressureDao {
 
+    //    Функция добавления данных в базу данных
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertDataPressure(dataPressure: DataPressure)
 
 /*
-    @Query("SELECT * FROM DataPressure WHERE dateOfMeasurements >= :startDate")
+    //    Функция получения данных по дате и времени за месяц
+    @Query("SELECT * FROM DataPressure WHERE dateAndTimeOfMeasurements >= :startDate")
     fun getDatesInLastMonth(startDate: Long): List<DataPressure>
 
-    @Query("SELECT * FROM DataPressure WHERE dateOfMeasurements >= :startDate")
+    //    Функция получения данных по дате и времени за неделю
+    @Query("SELECT * FROM DataPressure WHERE dateAndTimeOfMeasurements >= :startDate")
     fun getDatesInLastWeek(startDate: Long): List<DataPressure>
 */
 
-    @Query("SELECT * FROM DataPressure WHERE dateOfMeasurements >= 0")
+    //    Функция получения данных по дате и времени за день
+    @Query("SELECT * FROM DataPressure WHERE dateAndTimeOfMeasurements >= 0")
     fun getDatesToday(): List<DataPressure>
 
+    //    Функция удаления данных
     @Delete
     suspend fun deleteDataPressure(dataPressure: DataPressure)
 

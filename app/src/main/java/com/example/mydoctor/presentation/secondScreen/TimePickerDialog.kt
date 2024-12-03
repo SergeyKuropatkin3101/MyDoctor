@@ -58,15 +58,19 @@ fun AdvancedTimePicker(
 ) {
 
 
+    val calendarCurrentTime = Calendar.getInstance()
+    val currentHour = calendarCurrentTime[Calendar.HOUR_OF_DAY]
+    val currentMinute = calendarCurrentTime[Calendar.MINUTE]
+
     val timePickerState = rememberTimePickerState(
-        initialHour = vm.hour.value,
-        initialMinute = vm.minute.value,
+        initialHour = currentHour,
+        initialMinute = currentMinute,
         is24Hour = true,
     )
 
 
-    /** The icon used for the icon button that switches from dial to input */
-    val toggleIcon = if (vm.showDial.value) {
+    /** Значок, используемый для кнопки-значка, которая переключается с набора на ввод */
+    val toggleIcon = if (vm.showPickerOrInput.value) {
         ImageVector.vectorResource(id = R.drawable.iconkeyboard)
     } else {
         Icons.Filled.AccessTime
@@ -76,7 +80,7 @@ fun AdvancedTimePicker(
         onDismiss = { onDismiss() },
         onConfirm = { onConfirm(timePickerState) },
         toggle = {
-            IconButton(onClick = { vm.showDial.value = !vm.showDial.value }) {
+            IconButton(onClick = { vm.showPickerOrInput.value = !vm.showPickerOrInput.value }) {
 
                 Icon(
                     imageVector = toggleIcon,
@@ -94,7 +98,7 @@ fun AdvancedTimePicker(
             clockDialColor = White_bg,
             timeSelectorSelectedContentColor = Black1000
         )
-        if (vm.showDial.value) {
+        if (vm.showPickerOrInput.value) {
             TimePicker(
                 state = timePickerState,
                 colors = timePickerAndInputColors

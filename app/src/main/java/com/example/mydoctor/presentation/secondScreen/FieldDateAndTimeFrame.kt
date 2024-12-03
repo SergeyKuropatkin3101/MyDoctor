@@ -39,14 +39,14 @@ fun FieldDateAndTimeFrame(
 
             vm.datePickerState.value = rememberDatePickerState()
             TextButton(
-                onClick = { vm.dialogControllerDate.value = true },
+                onClick = { vm.turnOnDatePickerDialog() },
                 modifier = Modifier
             ) {
-                if (vm.dialogControllerDate.value) {
+                if (vm.showDatePickerDialog.value) {
                     DataPickerDialogFun(vm)
                 }
                 Text(
-                    text = vm.textDate.value,
+                    text = vm.labelForDateButton.value,
                     fontSize = 18.sp,
                     color = Black,
                 )
@@ -58,30 +58,31 @@ fun FieldDateAndTimeFrame(
                 fontSize = 16.sp
             )
 
+
             TextButton(
-                onClick = {vm.showTimePicker.value = true},
+                onClick = {vm.turnOnTimePicker()},
                 modifier = Modifier
             ) {
-                if (vm.showTimePicker.value) {
+                if (vm.showTimePickerState.value) {
                     AdvancedTimePicker(vm,
                         onConfirm = { timePickerState ->
                             // Обработка выбора времени
-                            vm.selectedTime.value = String.format(
+                            vm.selectedTimeFromPicker.value = String.format(
                                 "%02d:%02d",
                                 timePickerState.hour,
                                 timePickerState.minute
                             )
-//                            vm.isCorrectTime()
-                            vm.showTimePicker.value = false // Закрыть диалог
+                            vm.CheckTimeCurrentAndAfterOrBefore()
+                            vm.turnOffTimePicker() // Закрыть диалог
                         },
                         onDismiss = {
-                            vm.showTimePicker.value = false // Закрыть диалог при отмене
+                            vm.turnOffTimePicker() // Закрыть диалог при отмене
                         }
                     )
                 }
 
 
-                Text(text = vm.selectedTime.value,
+                Text(text = vm.labelForTimeButton.value,
                     fontSize = 18.sp,
                     color = Black
                 )

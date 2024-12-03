@@ -23,16 +23,15 @@ fun DataPickerDialogFun(
 ) {
 
     DatePickerDialog(
-        onDismissRequest = { vm.dialogControllerDate.value = false },
+        onDismissRequest = { vm.turnOffDatePickerDialog() },
         confirmButton = {
             TextButton(onClick = {
                 if (vm.datePickerState.value!!.selectedDateMillis != null) {
-                    vm.selectedDate.longValue = vm.datePickerState.value!!.selectedDateMillis!!
+                    vm.selectedDateInPickerDialogState.longValue = vm.datePickerState.value!!.selectedDateMillis!!
                 }
-                vm.isCorrectDate()
-                vm.dialogControllerDate.value = false
-            }
-            ) {
+                vm.CheckDateCurrentAndAfterOrBefore()
+                vm.turnOffDatePickerDialog()
+            }) {
                 Text(
                     text = "Ok",
                     color = Blue
@@ -41,7 +40,7 @@ fun DataPickerDialogFun(
         },
         dismissButton = {
             TextButton(onClick = {
-                vm.dialogControllerDate.value = false
+                vm.turnOffDatePickerDialog()
             }) {
                 Text(
                     text = "Cancel",

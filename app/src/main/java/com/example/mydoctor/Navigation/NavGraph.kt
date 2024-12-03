@@ -27,25 +27,3 @@ fun NavGraph(navController: NavHostController, modifier: Modifier, viewModel: Pr
         }
     }
 }
-
-/*
-val navController = rememberNavController()
- NavHost(navController, startDestination = "ExampleRoute") {
-    composable("ExampleRoute") {
-        val viewModel = hiltViewModel&lt;ExampleViewModel&gt;()
-    }
-}
-
-val navController = rememberNavController()
-  NavHost(navController, startDestination = "Parent") {
-    navigation(startDestination = "InnerRouteA", route = "Parent") {
-        composable("InnerRouteA") {
-            val parentEntry = remember { navController.getBackStackEntry("Parent") }
-            val viewModel = hiltViewModel&lt;ParentViewModel&gt;(parentEntry)
-        }
-        composable("InnerRouteB") {
-            val parentEntry = remember { navController.getBackStackEntry("Parent") }
-            val viewModel = hiltViewModel&lt;ParentViewModel&gt;(parentEntry)
-        }
-    }
-}*/

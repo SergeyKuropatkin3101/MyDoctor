@@ -83,12 +83,21 @@ fun SecondScreen(
             AddDataNotes(vm)
         }
 
-        val message = stringResource(id = R.string.textIncorrectData)
+        var message: String
+        val messageIncorrectDate = stringResource(id = R.string.textIncorrectData)
+        val messageIncorrectTime = stringResource(R.string.textIncorrectTime)
 
         val scope = rememberCoroutineScope()
-        if (vm.snackbarHostVisible.value) {
+        if (vm.snackbarVisibleState.value) {
             LaunchedEffect(key1 = Unit) {
                 scope.launch {
+                    message = if (vm.snackbarVisibleDateState.value) {
+                        messageIncorrectDate
+                    } else{
+                        messageIncorrectTime
+                    }
+                    vm.turnOffSnackbarVisibleDate()
+                    vm.turnOffSnackbarVisible()
                     vm.snackbarHostState.value.showSnackbar(
                         message = message,
                         withDismissAction = true
@@ -96,7 +105,6 @@ fun SecondScreen(
 
                 }
             }
-            vm.snackbarHostVisible.value = false
         }
 
 
@@ -107,7 +115,7 @@ fun SecondScreen(
                 containerColor = Blue,
                 contentColor = White,
             ),
-            enabled = vm.saveButtonEnabled.value,
+            enabled = vm.saveButtonEnabledState.value,
             modifier = Modifier
                 .align(Alignment.BottomCenter)
                 .fillMaxWidth()

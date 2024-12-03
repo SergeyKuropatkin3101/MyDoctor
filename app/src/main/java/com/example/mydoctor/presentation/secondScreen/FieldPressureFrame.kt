@@ -67,10 +67,10 @@ fun FieldPressureFrame(
                             .padding(bottom = 16.dp)
                     )
                     OutlinedTextField(
-                        vm.valueUpperPressure.value,
+                        vm.upperPressureState.value,
                         {
-                            vm.valueUpperPressure.value = it
-                            vm.isSaveButtonEnabled()
+                            vm.upperPressureState.value = it
+                            vm.enablingSaveButton()
                         },
                         singleLine = true,
                         shape = RoundedCornerShape(14.dp),
@@ -103,9 +103,9 @@ fun FieldPressureFrame(
                             .padding(bottom = 16.dp)
                     )
                     OutlinedTextField(
-                        vm.valueLowerPressure.value,
-                        {vm.valueLowerPressure.value = it
-                            vm.isSaveButtonEnabled()},
+                        vm.lowerPressureState.value,
+                        {vm.lowerPressureState.value = it
+                            vm.enablingSaveButton()},
                         shape = RoundedCornerShape(14.dp),
                         singleLine = true,
                         placeholder = { Text(
@@ -142,8 +142,8 @@ fun FieldPressureFrame(
             )
 
             OutlinedTextField(
-                vm.valuePulse.value,
-                {vm.valuePulse.value = it},
+                vm.pulseState.value,
+                {vm.pulseState.value = it},
                 singleLine = true,
                 shape = RoundedCornerShape(14.dp),
                 placeholder = { Text(

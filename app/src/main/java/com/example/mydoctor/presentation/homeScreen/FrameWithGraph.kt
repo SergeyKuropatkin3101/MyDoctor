@@ -129,7 +129,7 @@ fun FrameWithGraph(vm: PressureViewModel, navController: NavHostController) {
         val scope = rememberCoroutineScope()
         LaunchedEffect(Unit) {
             scope.launch() {
-                vm.delayTooltip()
+                vm.delayPopup()
             }
         }
         OutlinedButton (
@@ -160,8 +160,8 @@ fun FrameWithGraph(vm: PressureViewModel, navController: NavHostController) {
                 .tooltip(
                     title = stringResource(R.string.tooltipTitle),
                     text = stringResource(R.string.tooltipText),
-                    enabled = vm.enabledTooltip.value,
-                    onDismiss = { vm.enabledTooltip.value = false }
+                    enabled = vm.enabledPopupState.value,
+                    onDismiss = { vm.turnOffEnabledPopup() }
                 )
 
 

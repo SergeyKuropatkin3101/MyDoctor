@@ -28,7 +28,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.CornerRadius
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.geometry.RoundRect
 import androidx.compose.ui.geometry.Size
@@ -56,7 +55,6 @@ import com.example.mydoctor.R
 import com.example.mydoctor.ui.theme.Black1000
 import com.example.mydoctor.ui.theme.White
 import kotlin.math.min
-import kotlin.math.roundToInt
 
 @Composable
 fun Modifier.tooltip(
@@ -199,9 +197,7 @@ private fun calculateOffset(
     screenWidthPx: Int,
     screenHeightPx: Int,
 ): IntOffset {
-    val horizontalAlignmentPosition =  positionInRoot.x //+ (componentSize.width / 2) - (tooltipSize.width / 2)
-
-
+    val horizontalAlignmentPosition =  positionInRoot.x
     val verticalAlignmentPosition = positionInRoot.y - (tooltipSize.height + componentSize.height)
 
     return IntOffset(
@@ -263,5 +259,3 @@ private fun Modifier.drawOverlayBackground(
     }
 }
 
-
-private fun Offset.toIntOffset() = IntOffset(x.roundToInt(), y.roundToInt())

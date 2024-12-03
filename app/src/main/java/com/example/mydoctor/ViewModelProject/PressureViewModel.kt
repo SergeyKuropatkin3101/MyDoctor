@@ -1,5 +1,6 @@
 package com.example.mydoctor.ViewModelProject
 
+import android.util.Log
 import androidx.compose.material3.DatePickerState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.SnackbarHostState
@@ -23,44 +24,60 @@ class PressureViewModel @Inject constructor (
     val mainDb: MainDb
 ) : ViewModel() {
 
-    val valueUpperPressure = mutableStateOf<String>("")
-    val valueLowerPressure = mutableStateOf<String>("")
-    var saveButtonEnabled = mutableStateOf<Boolean>(false)
+    val upperPressureState = mutableStateOf<String>("")
+    val lowerPressureState = mutableStateOf<String>("")
+    val pulseState = mutableStateOf<String>("")
+    val dateAndTimeOfMeasurementsState = mutableStateOf<Date>(Date())
+    var noteOfMeasurementsState = mutableStateOf<String>("")
 
-    var valuePulse = mutableStateOf<String>("")
-    var valueDateOfMeasurements = mutableStateOf<Date>(Date())
-
-    var valueTimeOfMeasurements = mutableStateOf<Date>(Date())
-    var valueNoteOfMeasurements = mutableStateOf<String>("")
-
-    fun isSaveButtonEnabled (){
-        saveButtonEnabled.value = valueUpperPressure.value.isNotEmpty()
-                && valueLowerPressure.value.isNotEmpty()
+    val saveButtonEnabledState = mutableStateOf<Boolean>(false)
+    fun enablingSaveButton (){
+        saveButtonEnabledState.value = upperPressureState.value.isNotEmpty()
+                && lowerPressureState.value.isNotEmpty()
     }
-    var dialogControllerDate = mutableStateOf(false)
-    var selectedDate = mutableLongStateOf(System.currentTimeMillis())
+    val showDatePickerDialog = mutableStateOf(false)
+
+    fun turnOffDatePickerDialog(){
+        showDatePickerDialog.value = false
+    }
+    fun turnOnDatePickerDialog(){
+        showDatePickerDialog.value = true
+    }
+    val selectedDateInPickerDialogState = mutableLongStateOf(System.currentTimeMillis())
 
 
-    var enabledTooltip = mutableStateOf(true)
-    var snackbarHostVisible = mutableStateOf(false)
+    val enabledPopupState = mutableStateOf(true)
+    val snackbarVisibleState = mutableStateOf(false)
+    val snackbarVisibleDateState = mutableStateOf(false)
 
-    suspend fun delayTooltip() {
+    suspend fun delayPopup() {
         delay(10000)
-        enabledTooltip.value = false
+        enabledPopupState.value = false
     }
 
-    var snackbarHostState =  mutableStateOf(SnackbarHostState())
+    fun turnOffEnabledPopup() {
+        enabledPopupState.value = false
+    }
+
+    fun turnOffSnackbarVisibleDate() {
+        snackbarVisibleDateState.value = false
+    }
+    fun turnOffSnackbarVisible() {
+        snackbarVisibleState.value = false
+    }
+
+
+    val snackbarHostState =  mutableStateOf(SnackbarHostState())
 
     fun insertData(){
-        saveButtonEnabled.value = false
+        saveButtonEnabledState.value = false
         insertDataPressure(
             DataPressure(
-            upperDataPressure = valueUpperPressure.value,
-            lowerDataPressure = valueLowerPressure.value,
-            pulse = valuePulse.value,
-            dateOfMeasurements = valueDateOfMeasurements.value,
-            timeOfMeasurements = valueTimeOfMeasurements.value,
-            noteOfMeasurements = valueNoteOfMeasurements.value
+            upperDataPressure = upperPressureState.value,
+            lowerDataPressure = lowerPressureState.value,
+            pulse = pulseState.value,
+            dateAndTimeOfMeasurements = dateAndTimeOfMeasurementsState.value,
+            noteOfMeasurements = noteOfMeasurementsState.value
             )
         )
     }
@@ -83,60 +100,67 @@ class PressureViewModel @Inject constructor (
     val datePickerState = mutableStateOf<DatePickerState?>(null)
 
 
-    private val dataFormat = SimpleDateFormat(
-        "dd.MM.yyyy"
-    )
+    private val dataFormatForDatePicker = SimpleDateFormat("dd.MM.yyyy")
 
+    val currentDate = dataFormatForDatePicker.format(Date())
+    var labelForDateButton = mutableStateOf<String>(currentDate)
+    fun CheckDateCurrentAndAfterOrBefore() {
 
-    val currentDate = dataFormat.format(Date())
-    var textDate = mutableStateOf<String>(currentDate)
-    fun isCorrectDate() {
+        val selectedDateWithFormat = dataFormatForDatePicker.format(selectedDateInPickerDialogState.longValue)
+        val parseSelectedDate = dataFormatForDatePicker.parse(selectedDateWithFormat)
+        val parseCurrentDate = dataFormatForDatePicker.parse(currentDate)
 
-        val selectedDateWithFormat = dataFormat.format(selectedDate.longValue)
-        val startDate = dataFormat.parse(selectedDateWithFormat)
-        val startDateC = dataFormat.parse(currentDate)
-
-        if (startDateC.compareTo(startDate) > 0) {
-            snackbarHostVisible.value = true
-            textDate.value = currentDate
-            valueDateOfMeasurements.value = startDateC
+        if (parseCurrentDate.compareTo(parseSelectedDate) > 0) {
+            snackbarVisibleState.value = true
+            snackbarVisibleDateState.value = true
+            labelForDateButton.value = currentDate
         } else {
-            textDate.value = selectedDateWithFormat
-            valueDateOfMeasurements.value = startDate
+            labelForDateButton.value = selectedDateWithFormat
         }
     }
 
 
-    private val calendarCurrent: Calendar = Calendar.getInstance()
-    val hour = mutableIntStateOf( calendarCurrent[Calendar.HOUR_OF_DAY])
-    val minute = mutableIntStateOf(calendarCurrent[Calendar.MINUTE])
+    private val calendarCurrentTime: Calendar = Calendar.getInstance()
+    val currentHour = mutableIntStateOf( calendarCurrentTime[Calendar.HOUR_OF_DAY])
+    val currentMinute = mutableIntStateOf(calendarCurrentTime[Calendar.MINUTE])
 
-    var showTimePicker = mutableStateOf(false)
-    var selectedTime = mutableStateOf(String.format("%02d:%02d",hour.value,minute.value))
+    var showTimePickerState = mutableStateOf(false)
+
+    fun turnOnTimePicker() {
+        showTimePickerState.value = true
+    }
+    fun turnOffTimePicker() {
+        showTimePickerState.value = false
+    }
 
 
-    /*fun isCorrectTime() {
+    val currentTimeForPicker = mutableStateOf(String.format("%02d:%02d",currentHour.intValue,currentMinute.intValue))
+    val selectedTimeFromPicker = mutableStateOf(String.format("%02d:%02d",currentHour.intValue,currentMinute.intValue))
 
-         val dataFormatWithHourAndMinute = SimpleDateFormat(
-        "dd.MM.yyyy HH:mm"
-         )
 
-        val selectedTimWithFormat = dataFormat.format(selectedDate.longValue)
-        val startDate = dataFormat.parse(selectedDateWithFormat)
-        val startDateC = dataFormat.parse(currentDate)
+    val labelForTimeButton= mutableStateOf(currentTimeForPicker.value)
+    fun CheckTimeCurrentAndAfterOrBefore() {
+        val currentDateAndCurrentTimeDay = currentDate + " " + currentTimeForPicker.value
+        val selectedDateAndSelectedTimeDay = labelForDateButton.value + " " + selectedTimeFromPicker.value
+         val dateAndTimeFormat = SimpleDateFormat("dd.MM.yyyy HH:mm")
 
-        if (startDateC.compareTo(startDate) > 0) {
-            snackbarHostVisible.value = true
-            textDate.value = currentDate
-            valueDateOfMeasurements.value = startDateC
+        val parseCurrentDateAndCurrentTimeDay = dateAndTimeFormat.parse(currentDateAndCurrentTimeDay)
+        val parseSelectedDataAndSelectedTimeDay = dateAndTimeFormat.parse(selectedDateAndSelectedTimeDay)
+        Log.i("Ter",parseCurrentDateAndCurrentTimeDay.toString() +" "+ parseSelectedDataAndSelectedTimeDay.toString())
+        Log.i("Ter",(parseCurrentDateAndCurrentTimeDay > parseSelectedDataAndSelectedTimeDay).toString())
+
+        if (parseCurrentDateAndCurrentTimeDay > parseSelectedDataAndSelectedTimeDay) {
+            turnOffSnackbarVisibleDate()
+            snackbarVisibleState.value = true
+            labelForTimeButton.value = currentTimeForPicker.value
+            dateAndTimeOfMeasurementsState.value = parseCurrentDateAndCurrentTimeDay
         } else {
-            textDate.value = selectedDateWithFormat
-            valueDateOfMeasurements.value = startDate
+            labelForTimeButton.value = selectedTimeFromPicker.value
+            dateAndTimeOfMeasurementsState.value = parseSelectedDataAndSelectedTimeDay
         }
-    }*/
+    }
 
-    /** Determines whether the time picker is dial or input */
-    var showDial =  mutableStateOf(true)
+    var showPickerOrInput =  mutableStateOf(true)
 
 
 }

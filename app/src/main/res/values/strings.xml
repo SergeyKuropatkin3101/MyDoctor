@@ -26,4 +26,5 @@
     <string name="tooltipTitle">Добавьте данные</string>
     <string name="tooltipText">Добавить данные можно, кликнув на кнопку. Или попробуйте отсканировать данные на вашем аппарате.</string>
     <string name="selectTime">Select Time</string>
+    <string name="textIncorrectTime">"Время не может быть установлено меньше нынешнего "</string>
 </resources>
