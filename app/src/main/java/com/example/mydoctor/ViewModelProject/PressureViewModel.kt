@@ -146,8 +146,6 @@ class PressureViewModel @Inject constructor (
 
         val parseCurrentDateAndCurrentTimeDay = dateAndTimeFormat.parse(currentDateAndCurrentTimeDay)
         val parseSelectedDataAndSelectedTimeDay = dateAndTimeFormat.parse(selectedDateAndSelectedTimeDay)
-        Log.i("Ter",parseCurrentDateAndCurrentTimeDay.toString() +" "+ parseSelectedDataAndSelectedTimeDay.toString())
-        Log.i("Ter",(parseCurrentDateAndCurrentTimeDay > parseSelectedDataAndSelectedTimeDay).toString())
 
         if (parseCurrentDateAndCurrentTimeDay > parseSelectedDataAndSelectedTimeDay) {
             turnOffSnackbarVisibleDate()

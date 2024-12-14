@@ -35,12 +35,14 @@ import androidx.navigation.compose.rememberNavController
 import com.example.mydoctor.Navigation.Routes
 import com.example.mydoctor.R
 import com.example.mydoctor.ViewModelProject.PressureViewModel
+import com.example.mydoctor.data.DataPressure
 import com.example.mydoctor.ui.theme.AddDataColor
 import com.example.mydoctor.ui.theme.Black300
 import com.example.mydoctor.ui.theme.Orange80
 import com.example.mydoctor.ui.theme.White
 import com.example.mydoctor.ui.theme.Yellow80
 import kotlinx.coroutines.launch
+import java.util.Date
 
 @Composable
 fun FrameWithGraph(vm: PressureViewModel, navController: NavHostController) {
@@ -123,8 +125,14 @@ fun FrameWithGraph(vm: PressureViewModel, navController: NavHostController) {
             )
 
         }
-
-        Graph()
+        val Data = listOf(
+            DataPressure(0,"180","106","70", Date(124,11,5,0,5),"Note"),
+            DataPressure(1,"110","80","50", Date(124,11,7,0,51),"Note1"),
+            DataPressure(2,"120","85","65", Date(124,11,8,20,35),"Note2"),
+            DataPressure(3,"114","70","87", Date(124,11,9,20,0),"Note3"),
+            DataPressure(4,"150","115","74", Date(124,11,11,22,59),"Note4")
+        )
+        Graph(Data)
 
         val scope = rememberCoroutineScope()
         LaunchedEffect(Unit) {

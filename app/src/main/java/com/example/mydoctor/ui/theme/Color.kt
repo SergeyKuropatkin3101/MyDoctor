@@ -2,8 +2,14 @@ package com.example.mydoctor.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val SecondaryGrey = Color(0xFFCEDDE9)
-val CameraColor = Color(0xFFFF624D)
+val LabelButtonInGraph = Color(0xFF919191)
+val PointUpperColor = Color(0xFFFF725E)
+val PointLowerColor = Color(0xFFFFB342)
+val LineUpperColor = Color(0x33FF725E)
+val LineLowerColor = Color(0x33FFB342)
+val Line200100Color = Color(0x331C1C24)
+val Line150Color = Color(0x66FF0000)
+val Line50Color = Color(0x800033FF)
 val PlaceHolderColor = Color(0xFF83A0B9)
 val White_bg = Color(0xFFFAFAFE)
 val Blue = Color(0xFF0088FF)
