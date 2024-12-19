@@ -36,7 +36,7 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun SecondScreen(
-    vm: PressureViewModel,
+    vm: PressureViewModel = hiltViewModel(),
     navController: NavHostController,
     modifier: Modifier) {
     Box(
@@ -137,6 +137,5 @@ fun SecondScreen(
 @Composable
 fun SecondScreenPreview() {
     val navController = rememberNavController()
-    val vm = hiltViewModel<PressureViewModel>()
-    SecondScreen(vm,navController = navController, modifier = Modifier)
+    SecondScreen(navController = navController, modifier = Modifier)
 }

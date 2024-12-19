@@ -13,16 +13,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.mydoctor.R
+import com.example.mydoctor.ViewModelProject.MainScreenViewModel
+import com.example.mydoctor.ViewModelProject.StatusTimeIntervalButtons
 import com.example.mydoctor.ui.theme.Black
 import com.example.mydoctor.ui.theme.White
 
 
 @Composable
-fun TimeInterval() {
+fun TimeInterval(vm: MainScreenViewModel) {
     Row (
         horizontalArrangement = Arrangement.spacedBy(6.dp),
         modifier = Modifier
@@ -40,7 +41,7 @@ fun TimeInterval() {
 
     ){
         TextButton(
-                onClick = { },
+                onClick = {vm.statusTimeIntervalButtons.value = StatusTimeIntervalButtons.DAY },
                 modifier = Modifier
                     .fillMaxWidth()
                     .weight(1f)
@@ -53,7 +54,7 @@ fun TimeInterval() {
             }
 
         TextButton(
-                onClick = { },
+                onClick = {vm.showWeekDataPressure() },
                 modifier = Modifier
                     .fillMaxWidth()
                     .weight(1f)
@@ -65,7 +66,7 @@ fun TimeInterval() {
             }
 
         TextButton(
-                onClick = { },
+                onClick = {vm.statusTimeIntervalButtons.value = StatusTimeIntervalButtons.MONTH },
                 modifier = Modifier
                     .fillMaxWidth()
                     .weight(1f)
@@ -79,8 +80,10 @@ fun TimeInterval() {
 }
 
 
+/*
 @Preview(showBackground = true)
 @Composable
 fun TimeIntervalPreview() {
-    TimeInterval()
+    TimeInterval(vm)
 }
+*/

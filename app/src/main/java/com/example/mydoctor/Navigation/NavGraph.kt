@@ -10,7 +10,7 @@ import com.example.mydoctor.presentation.homeScreen.HomeScreen
 import com.example.mydoctor.presentation.secondScreen.SecondScreen
 
 @Composable
-fun NavGraph(navController: NavHostController, modifier: Modifier, viewModel: PressureViewModel) {
+fun NavGraph(navController: NavHostController, modifier: Modifier) {
 
 
     NavHost(
@@ -19,11 +19,11 @@ fun NavGraph(navController: NavHostController, modifier: Modifier, viewModel: Pr
     {
 
         composable(Routes.HomeScreen.route) {
-            HomeScreen(viewModel,navController, modifier)
+            HomeScreen(navController = navController, modifier = modifier)
         }
 
         composable(Routes.SecondScreen.route) {
-            SecondScreen(viewModel,navController, modifier)
+            SecondScreen(navController = navController, modifier = modifier)
         }
     }
 }

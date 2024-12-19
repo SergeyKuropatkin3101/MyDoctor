@@ -13,6 +13,6 @@ data class DataPressure(
     var lowerDataPressure: String,          // нижнее давление (Диастолическое)
     var pulse: String,                      // пульс
     var dateAndTimeOfMeasurements: Date,    // дата и время измерений
-    var noteOfMeasurements: String?         // заметка во время измерений
+    var noteOfMeasurements: String         // заметка во время измерений
 
 )

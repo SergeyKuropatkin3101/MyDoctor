@@ -4,9 +4,11 @@ import android.util.Log
 import androidx.compose.material3.DatePickerState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.geometry.Offset
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mydoctor.data.DataPressure
@@ -90,6 +92,12 @@ class PressureViewModel @Inject constructor (
         }
     }
 
+    private fun getWeekDataPressures() {
+        viewModelScope.launch {
+            displayDataPressure.value = mainDb.dao.getAllDates()
+        }
+    }
+
     private fun insertDataPressure(dataPressure: DataPressure) = viewModelScope.launch {
         mainDb.dao.insertDataPressure(dataPressure)
     }
@@ -159,6 +167,8 @@ class PressureViewModel @Inject constructor (
     }
 
     var showPickerOrInput =  mutableStateOf(true)
+
+            // Main screen
 
 
 }

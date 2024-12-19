@@ -13,19 +13,17 @@ interface DataPressureDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertDataPressure(dataPressure: DataPressure)
 
-/*
-    //    Функция получения данных по дате и времени за месяц
+ /*   //    Функция получения данных по дате и времени за месяц
     @Query("SELECT * FROM DataPressure WHERE dateAndTimeOfMeasurements >= :startDate")
     fun getDatesInLastMonth(startDate: Long): List<DataPressure>
-
-    //    Функция получения данных по дате и времени за неделю
-    @Query("SELECT * FROM DataPressure WHERE dateAndTimeOfMeasurements >= :startDate")
-    fun getDatesInLastWeek(startDate: Long): List<DataPressure>
 */
+    //    Функция получения данных по дате и времени за неделю
+    @Query("SELECT * FROM DataPressure")
+    suspend fun getAllDates(): List<DataPressure>
 
     //    Функция получения данных по дате и времени за день
     @Query("SELECT * FROM DataPressure WHERE dateAndTimeOfMeasurements >= 0")
-    fun getDatesToday(): List<DataPressure>
+    suspend fun getDatesToday(): List<DataPressure>
 
     //    Функция удаления данных
     @Delete
