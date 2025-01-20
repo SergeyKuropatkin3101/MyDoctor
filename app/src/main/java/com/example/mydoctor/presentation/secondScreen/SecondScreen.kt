@@ -23,7 +23,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.mydoctor.R
-import com.example.mydoctor.ViewModelProject.PressureViewModel
+import com.example.mydoctor.viewModelProject.SecondScreenViewModel
 import com.example.mydoctor.presentation.BrushDrawCircle
 import com.example.mydoctor.ui.theme.Blue
 import com.example.mydoctor.ui.theme.Blue300
@@ -36,7 +36,6 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun SecondScreen(
-    vm: PressureViewModel = hiltViewModel(),
     navController: NavHostController,
     modifier: Modifier) {
     Box(
@@ -45,7 +44,7 @@ fun SecondScreen(
             .fillMaxSize()
             .padding(top = 22.dp)
     ) {
-
+        val vm = hiltViewModel<SecondScreenViewModel>()
 
         val radiusCircleSmall = 39
         val centerCircleSmallX = 4

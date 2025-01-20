@@ -2,7 +2,7 @@ package com.example.mydoctor.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val LabelButtonInGraph = Color(0xFF919191)
+val LabelBottomInGraph = Color(0xFF919191)
 val PointUpperColor = Color(0xFFFF725E)
 val PointLowerColor = Color(0xFFFFB342)
 val LineUpperColor = Color(0x33FF725E)
@@ -16,7 +16,7 @@ val Blue = Color(0xFF0088FF)
 val Blue300 = Color(0x4D0088FF)
 val ColorEllipseBig = Color(0x4DFFC122)
 val ColorEllipseSmall = Color(0x7FFF0000)
-val GreyDark = Color(0xff83A0B9)
+val Grey300 = Color(0x4DCEDDE9)
 val Black500 = Color(0x801C1C24)
 val Black = Color(0xff000000)
 val Black1000 = Color(0xFF1C1C24)
@@ -25,6 +25,7 @@ val White = Color(0xFFFFFFFF)
 val Purple80 = Color(0xFFD0BCFF)
 val PurpleGrey80 = Color(0xFFCCC2DC)
 val Pink80 = Color(0xFFEFB8C8)
+val BorderColor = Color(0xFFFF9F76)
 
 val Orange80 = Color(0xFFFF725E)
 val Yellow80 = Color(0xFFFFB342)

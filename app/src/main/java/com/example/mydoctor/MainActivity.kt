@@ -11,10 +11,8 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.rememberNavController
 import com.example.mydoctor.Navigation.NavGraph
-import com.example.mydoctor.ViewModelProject.PressureViewModel
 import com.example.mydoctor.ui.theme.MyDoctorTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -26,8 +24,6 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             val snackbarHostState = remember { SnackbarHostState() }
-            val viewModel = hiltViewModel<PressureViewModel>()
-            viewModel.snackbarHostState.value = snackbarHostState
             MyDoctorTheme {
                 Scaffold(
                     snackbarHost = { SnackbarHost(snackbarHostState) }
@@ -37,8 +33,8 @@ class MainActivity : ComponentActivity() {
                         navController = navController,
                         modifier = Modifier
                             .fillMaxSize()
-                            .padding(innerPadding),
-                        viewModel)
+                            .padding(innerPadding)
+                    )
 
                 }
 

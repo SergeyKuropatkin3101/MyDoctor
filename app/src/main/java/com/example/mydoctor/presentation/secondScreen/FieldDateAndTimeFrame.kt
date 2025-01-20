@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.mydoctor.R
-import com.example.mydoctor.ViewModelProject.PressureViewModel
+import com.example.mydoctor.viewModelProject.SecondScreenViewModel
 import com.example.mydoctor.ui.theme.Black
 import com.example.mydoctor.ui.theme.White
 
@@ -30,7 +30,7 @@ import com.example.mydoctor.ui.theme.White
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FieldDateAndTimeFrame(
-    vm: PressureViewModel
+    vm: SecondScreenViewModel
 ) {
 
     Column(
@@ -124,6 +124,6 @@ fun FieldDateAndTimeFrame(
 @Preview(showBackground = true)
 @Composable
 fun FieldDateAndTimeFramePreview() {
-    val vm = hiltViewModel<PressureViewModel>()
+    val vm = hiltViewModel<SecondScreenViewModel>()
     FieldDateAndTimeFrame(vm)
 }

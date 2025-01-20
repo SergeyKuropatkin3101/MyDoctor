@@ -34,13 +34,12 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.mydoctor.Navigation.Routes
 import com.example.mydoctor.R
-import com.example.mydoctor.ViewModelProject.MainScreenViewModel
-import com.example.mydoctor.ViewModelProject.PressureViewModel
 import com.example.mydoctor.ui.theme.AddDataColor
 import com.example.mydoctor.ui.theme.Black300
 import com.example.mydoctor.ui.theme.Orange80
 import com.example.mydoctor.ui.theme.White
 import com.example.mydoctor.ui.theme.Yellow80
+import com.example.mydoctor.viewModelProject.MainScreenViewModel
 import kotlinx.coroutines.launch
 
 @Composable
@@ -63,15 +62,18 @@ fun FrameWithGraph(vm: MainScreenViewModel, navController: NavHostController) {
                 16.dp
             )
         ) {
-            Text(text = stringResource(R.string.textNoData),
-                fontSize = 18.sp)
-            Spacer(
-                modifier = Modifier
-                    .height(16.dp)
-            )
-            Text(text = stringResource(R.string.TextToday),
-                fontSize = 10.sp
-            )
+            if (vm.listPointForGraph.isEmpty()) {
+                Text(text = stringResource(R.string.textNoData), fontSize = 18.sp)
+                Spacer(
+                    modifier = Modifier
+                        .height(16.dp)
+                )
+            }
+            else
+                DataPressureAndPulse(vm)
+
+            Text( text = vm.periodOnMainScreen.value, fontSize = 10.sp)
+
         }
         HorizontalDivider(
             color = Black300,
@@ -127,12 +129,12 @@ fun FrameWithGraph(vm: MainScreenViewModel, navController: NavHostController) {
 
         Graph(vm)
 
-        /*val scope = rememberCoroutineScope()
+        val scope = rememberCoroutineScope()
         LaunchedEffect(Unit) {
             scope.launch() {
                 vm.delayPopup()
             }
-        }*/
+        }
         OutlinedButton (
             onClick = {
                 navController
@@ -182,10 +184,12 @@ fun FrameWithGraph(vm: MainScreenViewModel, navController: NavHostController) {
 }
 
 
+
+
 @Preview(showBackground = true)
 @Composable
 fun FrameWithGraphPreview() {
-    val vm = hiltViewModel<PressureViewModel>()
+    val vm = hiltViewModel<MainScreenViewModel>()
     val navController = rememberNavController()
     FrameWithGraph(vm, navController)
 }

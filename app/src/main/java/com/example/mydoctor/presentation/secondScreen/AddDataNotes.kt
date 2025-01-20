@@ -17,15 +17,15 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.mydoctor.R
-import com.example.mydoctor.ViewModelProject.PressureViewModel
 import com.example.mydoctor.ui.theme.Black1000
 import com.example.mydoctor.ui.theme.PlaceHolderColor
 import com.example.mydoctor.ui.theme.White
+import com.example.mydoctor.viewModelProject.SecondScreenViewModel
 
 
 @Composable
 fun AddDataNotes(
-    vm: PressureViewModel
+    vm: SecondScreenViewModel
 ) {
     Column(
         modifier = Modifier
@@ -83,7 +83,7 @@ fun AddDataNotes(
 @Preview(showBackground = true)
 @Composable
 fun AddDataNotesPreview() {
-    val vm = hiltViewModel<PressureViewModel>()
+    val vm = hiltViewModel<SecondScreenViewModel>()
     AddDataNotes(vm)
 }
 

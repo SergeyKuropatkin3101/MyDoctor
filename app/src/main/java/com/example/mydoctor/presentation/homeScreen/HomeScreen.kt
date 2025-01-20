@@ -10,19 +10,18 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.example.mydoctor.ViewModelProject.MainScreenViewModel
 import com.example.mydoctor.presentation.BrushDrawCircle
 import com.example.mydoctor.ui.theme.ColorEllipseBig
 import com.example.mydoctor.ui.theme.ColorEllipseSmall
 import com.example.mydoctor.ui.theme.White_bg
+import com.example.mydoctor.viewModelProject.MainScreenViewModel
 
 @Composable
 fun HomeScreen(
-    vm: MainScreenViewModel = hiltViewModel(),
     navController: NavHostController,
     modifier: Modifier = Modifier
 ) {
-
+    val vm = hiltViewModel<MainScreenViewModel>()
     Box (
         modifier = modifier
             .background(White_bg)
@@ -57,9 +56,10 @@ fun HomeScreen(
         Column {
             Header(navController)
             Column {
+//                TimeInterval(vm)
                 TimeInterval(vm)
                 FrameWithGraph(vm,navController)
-                Notes()
+                Notes(vm)
             }
         }
     }

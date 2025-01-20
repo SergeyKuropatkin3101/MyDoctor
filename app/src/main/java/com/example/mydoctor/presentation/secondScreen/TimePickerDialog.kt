@@ -40,7 +40,7 @@ import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.mydoctor.R
-import com.example.mydoctor.ViewModelProject.PressureViewModel
+import com.example.mydoctor.viewModelProject.SecondScreenViewModel
 import com.example.mydoctor.ui.theme.Black1000
 import com.example.mydoctor.ui.theme.Black500
 import com.example.mydoctor.ui.theme.Blue
@@ -52,7 +52,7 @@ import java.util.Calendar
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AdvancedTimePicker(
-    vm: PressureViewModel,
+    vm: SecondScreenViewModel,
     onConfirm: (TimePickerState) -> Unit,
     onDismiss: () -> Unit,
 ) {
@@ -177,7 +177,7 @@ fun AdvancedTimePickerExamplePreview() {
     var showTimePicker by remember { mutableStateOf(false) }
     var selectedTime by remember { mutableStateOf("Выберите время") }
 
-    val vm = hiltViewModel<PressureViewModel>()
+    val vm = hiltViewModel<SecondScreenViewModel>()
     AdvancedTimePicker(
         vm,
         onConfirm = { timePickerState ->

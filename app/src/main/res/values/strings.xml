@@ -27,4 +27,7 @@
     <string name="tooltipText">Добавить данные можно, кликнув на кнопку. Или попробуйте отсканировать данные на вашем аппарате.</string>
     <string name="selectTime">Select Time</string>
     <string name="textIncorrectTime">"Время не может быть установлено меньше нынешнего "</string>
+    <string name="millimetersMercury">мм рт. ст</string>
+    <string name="beatsMinute">уд/мин</string>
+    <string name="presenceNote">есть заметки</string>
 </resources>

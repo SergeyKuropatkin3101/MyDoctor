@@ -2,8 +2,10 @@ package com.example.mydoctor.presentation.homeScreen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
@@ -16,10 +18,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.mydoctor.R
-import com.example.mydoctor.ViewModelProject.MainScreenViewModel
-import com.example.mydoctor.ViewModelProject.StatusTimeIntervalButtons
 import com.example.mydoctor.ui.theme.Black
 import com.example.mydoctor.ui.theme.White
+import com.example.mydoctor.viewModelProject.MainScreenViewModel
 
 
 @Composable
@@ -30,34 +31,46 @@ fun TimeInterval(vm: MainScreenViewModel) {
             .fillMaxWidth()
             .padding(
                 16.dp,
-                8.dp,
-                16.dp,
                 8.dp
             )
             .clip(
                 RoundedCornerShape(24.dp)
             )
             .background(White)
+            .padding(
+                16.dp,
+                8.dp
+            )
 
     ){
+
         TextButton(
-                onClick = {vm.statusTimeIntervalButtons.value = StatusTimeIntervalButtons.DAY },
+                onClick = {vm.showDayDataPressure() },
+                contentPadding = PaddingValues(0.dp),
                 modifier = Modifier
                     .fillMaxWidth()
                     .weight(1f)
+                    .clip(shape = RoundedCornerShape(24.dp))
+                    .background(vm.colorDayButtonTime.value)
+                    .height(26.dp)
+
             ) {
                 Text(text = stringResource(R.string.textDay),
                     fontSize = 14.sp,
                     textAlign = TextAlign.Center,
-                    color = Black
-                )
+                    color = Black,
+                    )
             }
 
         TextButton(
                 onClick = {vm.showWeekDataPressure() },
+                contentPadding = PaddingValues(0.dp),
                 modifier = Modifier
                     .fillMaxWidth()
                     .weight(1f)
+                    .clip(shape = RoundedCornerShape(24.dp))
+                    .background(vm.colorWeekButtonTime.value)
+                    .height(26.dp)
             ) {
                 Text(text = stringResource(R.string.textWeek),
                     fontSize = 14.sp,
@@ -66,10 +79,14 @@ fun TimeInterval(vm: MainScreenViewModel) {
             }
 
         TextButton(
-                onClick = {vm.statusTimeIntervalButtons.value = StatusTimeIntervalButtons.MONTH },
+                onClick = {vm.showMonthDataPressure() },
+                contentPadding = PaddingValues(0.dp),
                 modifier = Modifier
                     .fillMaxWidth()
                     .weight(1f)
+                    .clip(shape = RoundedCornerShape(24.dp))
+                    .background(vm.colorMonthButtonTime.value)
+                    .height(26.dp)
             ) {
                 Text(text = stringResource(R.string.textMonth),
                     fontSize = 14.sp,
@@ -79,11 +96,11 @@ fun TimeInterval(vm: MainScreenViewModel) {
     }
 }
 
-
 /*
+
 @Preview(showBackground = true)
 @Composable
 fun TimeIntervalPreview() {
-    TimeInterval(vm)
+    TimeInterval()
 }
 */

@@ -10,7 +10,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.mydoctor.ViewModelProject.PressureViewModel
+import com.example.mydoctor.viewModelProject.SecondScreenViewModel
 import com.example.mydoctor.ui.theme.Black1000
 import com.example.mydoctor.ui.theme.Black500
 import com.example.mydoctor.ui.theme.Blue
@@ -19,7 +19,7 @@ import com.example.mydoctor.ui.theme.White
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DataPickerDialogFun(
-    vm: PressureViewModel,
+    vm: SecondScreenViewModel,
 ) {
 
     DatePickerDialog(
